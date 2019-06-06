@@ -2,6 +2,27 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+ext {
+  bintrayRepo = "Android"
+  bintrayName = "com.sucho.placepicker"
+  libraryName = 'placepicker'
+
+  publishedGroupId = 'com.sucho'
+  artifact = 'placepicker'
+  libraryVersion = '0.1.3-alpha'
+
+  libraryDescription = 'Free PlacePicker for Android using Google Maps'
+  siteUrl = 'https://github.com/suchoX/PlacePicker'
+  gitUrl = 'https://github.com/suchoX/PlacePicker.git'
+  developerId = 'sucho1994'
+  developerName = 'Suchandrim Sarkar'
+  developerEmail = 'suchandrim.sarkar@gmail.com'
+  licenseName = 'The 2-Clause BSD License'
+  licenseUrl = 'https://opensource.org/licenses/BSD-2-Clause'
+  allLicenses = ["BSD 2-Clause"]
+}
 
 android {
   compileSdkVersion 28
@@ -10,7 +31,7 @@ android {
     minSdkVersion 14
     targetSdkVersion 28
     versionCode 1
-    versionName VERSION_NAME
+    versionName "0.1.2"
 
   }
 
@@ -29,63 +50,6 @@ android {
   }
 }
 
-install {
-  repositories.mavenInstaller {
-    pom.project {
-      name BINTRAY_NAME
-      description BINTRAY_DESC
-      url BINTRAY_SITE_URL
-
-      packaging 'aar'
-      groupId BINTRAY_GROUP_ID
-      artifactId BINTRAY_ARTIFACT_ID
-      version VERSION_NAME
-
-      licenses {
-        license {
-          name BINTRAY_LICENCE_NAME
-          url BINTRAY_LICENCE_URL
-          distribution 'repo'
-        }
-      }
-      scm {
-        connection BINTRAY_VCS_URL
-        url BINTRAY_SITE_URL
-      }
-      developers {
-        developer {
-          id BINTRAY_DEVELOPER_ID
-          name BINTRAY_DEVELOPER_NAME
-          email BINTRAY_DEVELOPER_EMAIL
-        }
-      }
-    }
-  }
-}
-
-Properties properties = new Properties()
-if (project.rootProject.file('local.properties').exists()) {
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
-
-bintray {
-  user = properties.getProperty("bintray.user")
-  key = properties.getProperty("bintray.apikey")
-  configurations = ['archives']
-  pkg {
-    repo = BINTRAY_REPO
-    name = BINTRAY_NAME
-    licenses = ['BSD 2-Clause']
-    vcsUrl = BINTRAY_VCS_URL
-    desc = BINTRAY_DESC
-    version {
-      name = VERSION_NAME
-      desc = 'First Version of Place Picker'
-      released  = new Date()
-      vcsTag = VERSION_NAME
-    }
-  }
-}
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -95,7 +59,9 @@ dependencies {
   implementation 'com.google.android.gms:play-services-maps:16.1.0'
   implementation 'com.google.android.material:material:1.1.0-alpha07'
   implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+}
 
-  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
-  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
+if (project.rootProject.file('local.properties').exists()) {
+  apply from: '../install.gradle'
+  apply from: '../bintray.gradle'
 }

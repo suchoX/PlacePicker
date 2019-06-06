@@ -3,6 +3,7 @@ package com.sucho.placepicker
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.OvershootInterpolator
@@ -15,23 +16,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.util.Locale
-import kotlin.coroutines.CoroutineContext
 
-class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
+class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   companion object {
     private const val TAG = "PlacePickerActivity"
   }
 
-  private lateinit var job: Job
-  override val coroutineContext: CoroutineContext
-    get() = job + Dispatchers.Main
 
   private lateinit var map: GoogleMap
   private lateinit var markerImage: ImageView
@@ -56,6 +48,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineSc
     mapFragment.getMapAsync(this)
 
     bottomSheet = findViewById(R.id.bottom_sheet)
+    bottomSheet.showCoordinatesTextView(showLatLong)
     markerImage = findViewById(R.id.marker_image_view)
 
     findViewById<FloatingActionButton>(R.id.place_chosen_button).setOnClickListener {
@@ -78,13 +71,12 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineSc
       }
     }
 
-    job = Job()
   }
 
   private fun getIntentData() {
     latitude = intent.getDoubleExtra(Constants.INITIAL_LATITUDE_INTENT, Constants.DEFAULT_LATITUDE)
     longitude = intent.getDoubleExtra(Constants.INITIAL_LONGITUDE_INTENT, Constants.DEFAULT_LONGITUDE)
-    showLatLong = intent.getBooleanExtra(Constants.SHOW_LAT_LONG_INTENT, true)
+    showLatLong = intent.getBooleanExtra(Constants.SHOW_LAT_LONG_INTENT, false)
     addressRequired = intent.getBooleanExtra(Constants.ADDRESS_REQUIRED_INTENT, true)
     zoom = intent.getFloatExtra(Constants.INITIAL_ZOOM_INTENT, Constants.DEFAULT_ZOOM)
   }
@@ -113,16 +105,13 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineSc
           .start()
 
       bottomSheet.showLoadingBottomDetails()
-
-      launch {
         val latLng = map.cameraPosition.target
         latitude = latLng.latitude
         longitude = latLng.longitude
-        async(Dispatchers.Default) {
+        AsyncTask.execute {
           getAddressForLocation()
-        }.await()
-        bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress)
-      }
+          runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
+        }
     }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
   }
@@ -162,10 +151,5 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineSc
   ): String {
     val s = address.split(",")
     return if (s.size >= 3) s[1] + "," + s[2] else if (s.size == 2) s[1] else s[0]
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    job.cancel()
   }
 }
