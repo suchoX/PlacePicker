@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sucho.placepicker">
+
+  <application
+      android:supportsRtl="true">
+
+    <activity
+        android:name=".PlacePickerActivity"
+        android:label="@string/title_activity_place_picker"
+        android:theme="@style/AppTheme"/>
+  </application>
+
+</manifest>
