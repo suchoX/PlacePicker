@@ -1,0 +1,105 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+  compileSdkVersion 28
+
+  defaultConfig {
+    minSdkVersion 14
+    targetSdkVersion 28
+    versionCode 1
+    versionName VERSION_NAME
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  androidExtensions {
+    experimental = true
+  }
+
+  defaultConfig {
+    vectorDrawables.useSupportLibrary = true
+  }
+}
+
+install {
+  repositories.mavenInstaller {
+    pom.project {
+      name BINTRAY_NAME
+      description BINTRAY_DESC
+      url BINTRAY_SITE_URL
+
+      packaging 'aar'
+      groupId BINTRAY_GROUP_ID
+      artifactId BINTRAY_ARTIFACT_ID
+      version VERSION_NAME
+
+      licenses {
+        license {
+          name BINTRAY_LICENCE_NAME
+          url BINTRAY_LICENCE_URL
+          distribution 'repo'
+        }
+      }
+      scm {
+        connection BINTRAY_VCS_URL
+        url BINTRAY_SITE_URL
+      }
+      developers {
+        developer {
+          id BINTRAY_DEVELOPER_ID
+          name BINTRAY_DEVELOPER_NAME
+          email BINTRAY_DEVELOPER_EMAIL
+        }
+      }
+    }
+  }
+}
+
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+bintray {
+  user = properties.getProperty("bintray.user")
+  key = properties.getProperty("bintray.apikey")
+  configurations = ['archives']
+  pkg {
+    repo = BINTRAY_REPO
+    name = BINTRAY_NAME
+    licenses = BINTRAY_LICENCES
+    vcsUrl = BINTRAY_VCS_URL
+    desc = BINTRAY_DESC
+    version {
+      name = VERSION_NAME
+      desc = 'First Version of Place Picker'
+      released  = new Date()
+      vcsTag = VERSION_NAME
+      gpg {
+        sign = true
+        passphrase =   user = properties.getProperty("gpgpassphrase")
+      }
+    }
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation 'androidx.appcompat:appcompat:1.0.2'
+  implementation 'androidx.core:core-ktx:1.0.2'
+  implementation 'com.google.android.gms:play-services-maps:16.1.0'
+  implementation 'com.google.android.material:material:1.1.0-alpha07'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
+}

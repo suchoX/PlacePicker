@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PlacePicker Example</string>
+    <string name="open_place_picker">Open Place Picker</string>
+</resources>
