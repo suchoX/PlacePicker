@@ -75,7 +75,7 @@ bintray {
   pkg {
     repo = BINTRAY_REPO
     name = BINTRAY_NAME
-    licenses = BINTRAY_LICENCES
+    licenses = ['BSD 2-Clause']
     vcsUrl = BINTRAY_VCS_URL
     desc = BINTRAY_DESC
     version {
@@ -83,10 +83,6 @@ bintray {
       desc = 'First Version of Place Picker'
       released  = new Date()
       vcsTag = VERSION_NAME
-      gpg {
-        sign = true
-        passphrase =   user = properties.getProperty("gpgpassphrase")
-      }
     }
   }
 }
