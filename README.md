@@ -3,7 +3,7 @@ Place Picker for Google Maps has been deprecated in Android and we are told to m
 
 <p align="center"><img src="https://github.com/suchoX/PlacePicker/blob/master/screens/place_picker_deprecated.png"></p>
 
-Thankfully, Static and Dynamic Maps on Mobile and Geocoder is still free. PlacePicker is a library that allows you to pick a point in the map and get its coordinates and Address using Geocoder instead of Google APIs
+Thankfully, Static and Dynamic Maps on Mobile and Geocoder is still free. PlacePicker is a Place Picker alternative library that allows you to pick a point in the map and get its coordinates and Address using Geocoder instead of Google APIs
 
 <p align="center"><img src="https://github.com/suchoX/PlacePicker/blob/master/screens/demo.gif"></p>
 
