@@ -1,6 +1,7 @@
 package com.sucho.placepicker
 
 import android.content.Context
+import android.location.Location
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ProgressBar
@@ -18,10 +19,11 @@ class CurrentPlaceSelectionBottomSheet @JvmOverloads constructor(
 ) : CoordinatorLayout(context, attrs, defStyleAttr) {
 
   private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
-  private var rootView: CoordinatorLayout? = null
-  private var placeNameTextView: TextView? = null
-  private var placeAddressTextView: TextView? = null
-  private var placeProgressBar: ProgressBar? = null
+  private lateinit var rootView: CoordinatorLayout
+  private lateinit var placeNameTextView: TextView
+  private lateinit var placeAddressTextView: TextView
+  private lateinit var placeCoordinatesTextView: TextView
+  private lateinit var placeProgressBar: ProgressBar
 
   val isShowing: Boolean
     get() = bottomSheetBehavior!!.state != STATE_HIDDEN
@@ -41,7 +43,12 @@ class CurrentPlaceSelectionBottomSheet @JvmOverloads constructor(
   private fun bindViews() {
     placeNameTextView = findViewById(R.id.text_view_place_name)
     placeAddressTextView = findViewById(R.id.text_view_place_address)
+    placeCoordinatesTextView = findViewById(R.id.text_view_place_coordinates)
     placeProgressBar = findViewById(R.id.progress_bar_place)
+  }
+
+  fun showCoordinatesTextView(show: Boolean) {
+    placeCoordinatesTextView.visibility = if (show) View.VISIBLE else View.GONE
   }
 
   fun setPlaceDetails(
@@ -52,24 +59,26 @@ class CurrentPlaceSelectionBottomSheet @JvmOverloads constructor(
   ) {
 
     if (latitude == -1.0 || longitude == -1.0) {
-      placeNameTextView!!.text = ""
-      placeAddressTextView!!.text = ""
-      placeProgressBar!!.visibility = View.VISIBLE
+      placeNameTextView.text = ""
+      placeAddressTextView.text = ""
+      placeProgressBar.visibility = View.VISIBLE
       return
     }
-    placeProgressBar!!.visibility = View.INVISIBLE
+    placeProgressBar.visibility = View.INVISIBLE
 
-    placeNameTextView!!.text = if (shortAddress.isEmpty()) "Dropped Pin" else shortAddress
-    placeAddressTextView!!.text = fullAddress
+    placeNameTextView.text = if (shortAddress.isEmpty()) "Dropped Pin" else shortAddress
+    placeAddressTextView.text = fullAddress
+    placeCoordinatesTextView.text = Location.convert(latitude, Location.FORMAT_DEGREES) + ", " + Location.convert(longitude, Location.FORMAT_DEGREES)
   }
 
   fun showLoadingBottomDetails() {
     if (!isShowing) {
       toggleBottomSheet()
     }
-    placeNameTextView!!.text = ""
-    placeAddressTextView!!.text = ""
-    placeProgressBar!!.visibility = View.VISIBLE
+    placeNameTextView.text = ""
+    placeAddressTextView.text = ""
+    placeCoordinatesTextView.text = ""
+    placeProgressBar.visibility = View.VISIBLE
   }
 
   fun dismissPlaceDetails() {
@@ -77,7 +86,7 @@ class CurrentPlaceSelectionBottomSheet @JvmOverloads constructor(
   }
 
   private fun toggleBottomSheet() {
-    bottomSheetBehavior!!.peekHeight = rootView!!.findViewById<View>(R.id.bottom_sheet_header)
+    bottomSheetBehavior!!.peekHeight = rootView.findViewById<View>(R.id.bottom_sheet_header)
         .height
     bottomSheetBehavior!!.state = if (isShowing) STATE_HIDDEN else STATE_COLLAPSED
     bottomSheetBehavior!!.isHideable = isShowing

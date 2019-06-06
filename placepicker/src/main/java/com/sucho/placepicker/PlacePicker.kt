@@ -8,7 +8,7 @@ class PlacePicker {
     class IntentBuilder {
 
       private lateinit var activity: Activity
-      private var showLatLong: Boolean = true
+      private var showLatLong: Boolean = false
       private var latitude: Double = Constants.DEFAULT_LATITUDE
       private var longitude: Double = Constants.DEFAULT_LONGITUDE
       private var zoom: Float = Constants.DEFAULT_ZOOM
