@@ -1,3 +1,5 @@
+ [ ![Download](https://api.bintray.com/packages/suchox/Android/com.sucho.placepicker/images/download.svg) ](https://bintray.com/suchox/Android/com.sucho.placepicker/_latestVersion)
+
 # PlacePicker
 Place Picker for Google Maps has been deprecated in Android and we are told to move to paid APIs. Autocomplete, Nearby and Places photos APIs are chargeable after a number of loads. [Check Pricing here](https://cloud.google.com/maps-platform/pricing/sheet/)
 
