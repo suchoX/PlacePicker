@@ -17,11 +17,13 @@ dependencies {
 }
 ```
 
-Make sure you have `mavenCentral()` added as a source:
+Till this library is added to Jcenter, please include this in your app `build.gradle`:
 
 ```
 repositories {
-  mavenCentral()
+  maven {
+    url 'https://dl.bintray.com/suchox/Android'
+  }
 }
 ```
 
