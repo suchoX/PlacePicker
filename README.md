@@ -13,7 +13,15 @@ Include the following dependencies in your app's build.gradle :
 
 ```
 dependencies {
-  implementation 'com.sucho:placepicker:0.1.3-alpha'
+  implementation 'com.sucho:placepicker:0.1.3'
+}
+```
+
+Make sure you have `mavenCentral()` added as a source:
+
+```
+repositories {
+  mavenCentral()
 }
 ```
 
