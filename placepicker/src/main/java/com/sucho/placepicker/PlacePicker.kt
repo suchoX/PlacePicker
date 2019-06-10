@@ -13,6 +13,7 @@ class PlacePicker {
       private var longitude: Double = Constants.DEFAULT_LONGITUDE
       private var zoom: Float = Constants.DEFAULT_ZOOM
       private var addressRequired: Boolean = true
+      private var hideMarkerShadow: Boolean = false
 
       fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -33,6 +34,8 @@ class PlacePicker {
 
       fun setAddressRequired(addressRequired: Boolean) = apply { this.addressRequired = addressRequired }
 
+      fun hideMarkerShadow(hideMarkerShadow: Boolean) = apply { this.hideMarkerShadow = hideMarkerShadow }
+
       fun build(activity: Activity): Intent {
         this.activity = activity
         val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -40,7 +43,7 @@ class PlacePicker {
         intent.putExtra(Constants.INITIAL_LATITUDE_INTENT, latitude)
         intent.putExtra(Constants.INITIAL_LONGITUDE_INTENT, longitude)
         intent.putExtra(Constants.INITIAL_ZOOM_INTENT, zoom)
-        intent.putExtra(Constants.ADDRESS_REQUIRED_INTENT, addressRequired)
+        intent.putExtra(Constants.HIDE_MARKER_SHADOW_INTENT, hideMarkerShadow)
         return intent
       }
     }
