@@ -1,3 +1,5 @@
+ [ ![Download](https://api.bintray.com/packages/suchox/Android/com.sucho.placepicker/images/download.svg) ](https://bintray.com/suchox/Android/com.sucho.placepicker/_latestVersion)
+
 # PlacePicker
 Place Picker for Google Maps has been deprecated in Android and we are told to move to paid APIs. Autocomplete, Nearby and Places photos APIs are chargeable after a number of loads. [Check Pricing here](https://cloud.google.com/maps-platform/pricing/sheet/)
 
@@ -13,7 +15,18 @@ Include the following dependencies in your app's build.gradle :
 
 ```
 dependencies {
-  implementation 'com.sucho:placepicker:0.1.3-alpha'
+  implementation 'com.google.android.gms:play-services-maps:16.1.0'
+  implementation 'com.sucho:placepicker:0.1.3'
+}
+```
+
+Till this library is added to Jcenter, please include this in your app `build.gradle`:
+
+```
+repositories {
+  maven {
+    url 'https://dl.bintray.com/suchox/Android'
+  }
 }
 ```
 
