@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.Toast
@@ -27,6 +28,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   private lateinit var map: GoogleMap
   private lateinit var markerImage: ImageView
+  private lateinit var markerShadowImage: ImageView
   private lateinit var bottomSheet: CurrentPlaceSelectionBottomSheet
 
   private var latitude = Constants.DEFAULT_LATITUDE
@@ -36,6 +38,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var addressRequired: Boolean = true
   private var shortAddress = ""
   private var fullAddress = ""
+  private var hideMarkerShadow = false
   var addresses: List<Address>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +53,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     bottomSheet = findViewById(R.id.bottom_sheet)
     bottomSheet.showCoordinatesTextView(showLatLong)
     markerImage = findViewById(R.id.marker_image_view)
+    markerShadowImage = findViewById(R.id.marker_shadow_image_view)
 
     findViewById<FloatingActionButton>(R.id.place_chosen_button).setOnClickListener {
       if (addresses != null) {
@@ -71,6 +75,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     }
 
+    markerShadowImage.visibility = if(hideMarkerShadow) View.GONE else View.VISIBLE
   }
 
   private fun getIntentData() {
@@ -78,6 +83,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     longitude = intent.getDoubleExtra(Constants.INITIAL_LONGITUDE_INTENT, Constants.DEFAULT_LONGITUDE)
     showLatLong = intent.getBooleanExtra(Constants.SHOW_LAT_LONG_INTENT, false)
     addressRequired = intent.getBooleanExtra(Constants.ADDRESS_REQUIRED_INTENT, true)
+    hideMarkerShadow = intent.getBooleanExtra(Constants.HIDE_MARKER_SHADOW_INTENT, false)
     zoom = intent.getFloatExtra(Constants.INITIAL_ZOOM_INTENT, Constants.DEFAULT_ZOOM)
   }
 
