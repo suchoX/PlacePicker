@@ -18,6 +18,7 @@ class PlacePicker {
       private var hideMarkerShadow: Boolean = false
       private var markerDrawableRes: Int = -1
       private var markerImageColorRes: Int = -1
+      private var fabBackgroundColorRes: Int = -1
 
       fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -44,6 +45,8 @@ class PlacePicker {
 
       fun setMarkerImageImageColor(@ColorRes markerImageColorRes: Int) = apply { this.markerImageColorRes = markerImageColorRes }
 
+      fun setFabColor(@ColorRes fabBackgroundColor: Int) = apply { this.fabBackgroundColorRes = fabBackgroundColor}
+
       fun build(activity: Activity): Intent {
         this.activity = activity
         val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -54,6 +57,7 @@ class PlacePicker {
         intent.putExtra(Constants.HIDE_MARKER_SHADOW_INTENT, hideMarkerShadow)
         intent.putExtra(Constants.MARKER_DRAWABLE_RES_INTENT, markerDrawableRes)
         intent.putExtra(Constants.MARKER_COLOR_RES_INTENT, markerImageColorRes)
+        intent.putExtra(Constants.FAB_COLOR_RES_INTENT, fabBackgroundColorRes)
         return intent
       }
     }
