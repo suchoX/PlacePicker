@@ -44,6 +44,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var markerDrawableRes: Int = -1
   private var markerColorRes: Int = -1
   private var fabColorRes: Int = -1
+  private var primaryTextColorRes: Int = -1
+  private var secondaryTextColorRes: Int = -1
   private var addresses: List<Address>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,16 +84,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     }
 
-    markerShadowImage.visibility = if (hideMarkerShadow) View.GONE else View.VISIBLE
-    if (markerColorRes != -1) {
-      markerImage.setColorFilter(ContextCompat.getColor(this, markerColorRes))
-    }
-    if (markerDrawableRes != -1) {
-      markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
-    }
-    if (fabColorRes != -1) {
-      fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
-    }
+    setIntentCustomization()
   }
 
   private fun getIntentData() {
@@ -104,6 +97,27 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     markerDrawableRes = intent.getIntExtra(Constants.MARKER_DRAWABLE_RES_INTENT, -1)
     markerColorRes = intent.getIntExtra(Constants.MARKER_COLOR_RES_INTENT, -1)
     fabColorRes = intent.getIntExtra(Constants.FAB_COLOR_RES_INTENT, -1)
+    primaryTextColorRes = intent.getIntExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, -1)
+    secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
+  }
+
+  private fun setIntentCustomization() {
+    markerShadowImage.visibility = if (hideMarkerShadow) View.GONE else View.VISIBLE
+    if (markerColorRes != -1) {
+      markerImage.setColorFilter(ContextCompat.getColor(this, markerColorRes))
+    }
+    if (markerDrawableRes != -1) {
+      markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
+    }
+    if (fabColorRes != -1) {
+      fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
+    }
+    if(primaryTextColorRes!=-1) {
+      bottomSheet.setPrimaryTextColor(ContextCompat.getColor(this, primaryTextColorRes))
+    }
+    if(secondaryTextColorRes!=-1) {
+      bottomSheet.setSecondaryTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
+    }
   }
 
   override fun onMapReady(googleMap: GoogleMap) {

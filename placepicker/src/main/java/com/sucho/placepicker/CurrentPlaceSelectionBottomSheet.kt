@@ -51,6 +51,14 @@ class CurrentPlaceSelectionBottomSheet @JvmOverloads constructor(
     placeCoordinatesTextView.visibility = if (show) View.VISIBLE else View.GONE
   }
 
+  fun setPrimaryTextColor(color: Int) {
+    placeNameTextView.setTextColor(color)
+  }
+
+  fun setSecondaryTextColor(color: Int) {
+    placeAddressTextView.setTextColor(color)
+  }
+
   fun setPlaceDetails(
     latitude: Double,
     longitude: Double,
