@@ -11,6 +11,7 @@ import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -39,7 +40,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var shortAddress = ""
   private var fullAddress = ""
   private var hideMarkerShadow = false
-  var addresses: List<Address>? = null
+  private var markerDrawableRes: Int = -1
+  private var addresses: List<Address>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -76,6 +78,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     markerShadowImage.visibility = if(hideMarkerShadow) View.GONE else View.VISIBLE
+    if(markerDrawableRes!=-1) {
+      markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
+    }
   }
 
   private fun getIntentData() {
@@ -85,6 +90,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     addressRequired = intent.getBooleanExtra(Constants.ADDRESS_REQUIRED_INTENT, true)
     hideMarkerShadow = intent.getBooleanExtra(Constants.HIDE_MARKER_SHADOW_INTENT, false)
     zoom = intent.getFloatExtra(Constants.INITIAL_ZOOM_INTENT, Constants.DEFAULT_ZOOM)
+    markerDrawableRes = intent.getIntExtra(Constants.MARKER_DRAWABLE_RES_INTENT, -1)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
