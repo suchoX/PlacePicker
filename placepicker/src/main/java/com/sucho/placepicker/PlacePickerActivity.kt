@@ -1,6 +1,7 @@
 package com.sucho.placepicker
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.location.Address
 import android.location.Geocoder
 import android.os.AsyncTask
@@ -26,11 +27,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     private const val TAG = "PlacePickerActivity"
   }
 
-
   private lateinit var map: GoogleMap
   private lateinit var markerImage: ImageView
   private lateinit var markerShadowImage: ImageView
   private lateinit var bottomSheet: CurrentPlaceSelectionBottomSheet
+  private lateinit var fab: FloatingActionButton
 
   private var latitude = Constants.DEFAULT_LATITUDE
   private var longitude = Constants.DEFAULT_LONGITUDE
@@ -42,6 +43,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var hideMarkerShadow = false
   private var markerDrawableRes: Int = -1
   private var markerColorRes: Int = -1
+  private var fabColorRes: Int = -1
   private var addresses: List<Address>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +59,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     bottomSheet.showCoordinatesTextView(showLatLong)
     markerImage = findViewById(R.id.marker_image_view)
     markerShadowImage = findViewById(R.id.marker_shadow_image_view)
+    fab = findViewById(R.id.place_chosen_button)
 
-    findViewById<FloatingActionButton>(R.id.place_chosen_button).setOnClickListener {
+    fab.setOnClickListener {
       if (addresses != null) {
         val addressData = AddressData(latitude, longitude, addresses)
         val returnIntent = Intent()
@@ -66,24 +69,28 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
         setResult(RESULT_OK, returnIntent)
         finish()
       } else {
-        if(!addressRequired) {
+        if (!addressRequired) {
           val addressData = AddressData(latitude, longitude, null)
           val returnIntent = Intent()
           returnIntent.putExtra(Constants.ADDRESS_INTENT, addressData)
           setResult(RESULT_OK, returnIntent)
           finish()
         } else {
-          Toast.makeText(this@PlacePickerActivity, R.string.no_address, Toast.LENGTH_LONG).show()
+          Toast.makeText(this@PlacePickerActivity, R.string.no_address, Toast.LENGTH_LONG)
+              .show()
         }
       }
     }
 
-    markerShadowImage.visibility = if(hideMarkerShadow) View.GONE else View.VISIBLE
-    if(markerColorRes!=-1) {
+    markerShadowImage.visibility = if (hideMarkerShadow) View.GONE else View.VISIBLE
+    if (markerColorRes != -1) {
       markerImage.setColorFilter(ContextCompat.getColor(this, markerColorRes))
     }
-    if(markerDrawableRes!=-1) {
+    if (markerDrawableRes != -1) {
       markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
+    }
+    if (fabColorRes != -1) {
+      fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
     }
   }
 
@@ -96,6 +103,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     zoom = intent.getFloatExtra(Constants.INITIAL_ZOOM_INTENT, Constants.DEFAULT_ZOOM)
     markerDrawableRes = intent.getIntExtra(Constants.MARKER_DRAWABLE_RES_INTENT, -1)
     markerColorRes = intent.getIntExtra(Constants.MARKER_COLOR_RES_INTENT, -1)
+    fabColorRes = intent.getIntExtra(Constants.FAB_COLOR_RES_INTENT, -1)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
@@ -122,13 +130,13 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
           .start()
 
       bottomSheet.showLoadingBottomDetails()
-        val latLng = map.cameraPosition.target
-        latitude = latLng.latitude
-        longitude = latLng.longitude
-        AsyncTask.execute {
-          getAddressForLocation()
-          runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
-        }
+      val latLng = map.cameraPosition.target
+      latitude = latLng.latitude
+      longitude = latLng.longitude
+      AsyncTask.execute {
+        getAddressForLocation()
+        runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
+      }
     }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
   }
