@@ -28,16 +28,16 @@ dependencies {
 
 ```
 val intent = PlacePicker.IntentBuilder()
-                .setLatLong(40.748672, -73.985628)  //Initial Latitude and Longitude the Map will load into
-                .showLatLong(true)  //Show Coordinates in the Activity
-                .setMapZoom(12.0f)  //Map Zoom Level. Default: 14.0
-                .setAddressRequired(true) //Set If return only Coordinates if cannot fetch Address for the coordinates. Default: True
-                .hideMarkerShadow(true) //Hides the shadow under the map marker. Default: False
-                .setMarkerDrawable(R.drawable.marker) //Change the default Marker Image
+                .setLatLong(40.748672, -73.985628)  // Initial Latitude and Longitude the Map will load into
+                .showLatLong(true)  // Show Coordinates in the Activity
+                .setMapZoom(12.0f)  // Map Zoom Level. Default: 14.0
+                .setAddressRequired(true) // Set If return only Coordinates if cannot fetch Address for the coordinates. Default: True
+                .hideMarkerShadow(true) // Hides the shadow under the map marker. Default: False
+                .setMarkerDrawable(R.drawable.marker) // Change the default Marker Image
                 .setMarkerImageImageColor(R.color.colorPrimary)
                 .setFabColor(R.color.fabColor)
-                .setPrimaryTextColor(R.color.primaryTextColor) //Change text color of Shortened Address
-                .setSecondaryTextColor(R.color.secondaryTextColor) //Change text color of full Address
+                .setPrimaryTextColor(R.color.primaryTextColor) // Change text color of Shortened Address
+                .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
 ```
