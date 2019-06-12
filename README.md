@@ -26,7 +26,7 @@ dependencies {
 1. You need a Maps API key and add it to your app. [Here's How](https://developers.google.com/maps/documentation/android-sdk/signup)
 2. To start The `PlacePickerActivity`:
 
-```
+``` java
 val intent = PlacePicker.IntentBuilder()
                 .setLatLong(40.748672, -73.985628)  // Initial Latitude and Longitude the Map will load into
                 .showLatLong(true)  // Show Coordinates in the Activity
