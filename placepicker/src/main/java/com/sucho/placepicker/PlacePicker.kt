@@ -2,6 +2,7 @@ package com.sucho.placepicker
 
 import android.app.Activity
 import android.content.Intent
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 
 class PlacePicker {
@@ -16,6 +17,7 @@ class PlacePicker {
       private var addressRequired: Boolean = true
       private var hideMarkerShadow: Boolean = false
       private var markerDrawableRes: Int = -1
+      private var markerImageColorRes: Int = -1
 
       fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -38,7 +40,9 @@ class PlacePicker {
 
       fun hideMarkerShadow(hideMarkerShadow: Boolean) = apply { this.hideMarkerShadow = hideMarkerShadow }
 
-      fun setMarkerDrawableRes(@DrawableRes markerDrawableRes: Int) = apply { this.markerDrawableRes = markerDrawableRes }
+      fun setMarkerDrawable(@DrawableRes markerDrawableRes: Int) = apply { this.markerDrawableRes = markerDrawableRes }
+
+      fun setMarkerImageImageColor(@ColorRes markerImageColorRes: Int) = apply { this.markerImageColorRes = markerImageColorRes }
 
       fun build(activity: Activity): Intent {
         this.activity = activity
@@ -49,6 +53,7 @@ class PlacePicker {
         intent.putExtra(Constants.INITIAL_ZOOM_INTENT, zoom)
         intent.putExtra(Constants.HIDE_MARKER_SHADOW_INTENT, hideMarkerShadow)
         intent.putExtra(Constants.MARKER_DRAWABLE_RES_INTENT, markerDrawableRes)
+        intent.putExtra(Constants.MARKER_COLOR_RES_INTENT, markerImageColorRes)
         return intent
       }
     }

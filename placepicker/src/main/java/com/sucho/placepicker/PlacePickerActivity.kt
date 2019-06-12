@@ -41,6 +41,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var fullAddress = ""
   private var hideMarkerShadow = false
   private var markerDrawableRes: Int = -1
+  private var markerColorRes: Int = -1
   private var addresses: List<Address>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +79,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     markerShadowImage.visibility = if(hideMarkerShadow) View.GONE else View.VISIBLE
+    if(markerColorRes!=-1) {
+      markerImage.setColorFilter(ContextCompat.getColor(this, markerColorRes))
+    }
     if(markerDrawableRes!=-1) {
       markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
     }
@@ -91,6 +95,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     hideMarkerShadow = intent.getBooleanExtra(Constants.HIDE_MARKER_SHADOW_INTENT, false)
     zoom = intent.getFloatExtra(Constants.INITIAL_ZOOM_INTENT, Constants.DEFAULT_ZOOM)
     markerDrawableRes = intent.getIntExtra(Constants.MARKER_DRAWABLE_RES_INTENT, -1)
+    markerColorRes = intent.getIntExtra(Constants.MARKER_COLOR_RES_INTENT, -1)
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
