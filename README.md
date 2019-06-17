@@ -20,6 +20,16 @@ dependencies {
 }
 ```
 
+If you are using AndroidX artifacts you need: 
+```
+ implementation 'com.google.android.material:material:1.1.0-alpha01'
+```  
+
+If you are using trandiotional libraries you need:
+```
+ implementation 'com.android.support:design:28.0.0'
+```
+
 
 ## How to use
 
@@ -42,7 +52,7 @@ val intent = PlacePicker.IntentBuilder()
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
 ```
 3. Then get the data `onActivityResult`
-```
+```java
 override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
         if (requestCode == Constants.PLACE_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
