@@ -11,7 +11,7 @@ ext {
 
   publishedGroupId = 'com.sucho'
   artifact = 'placepicker'
-  libraryVersion = '0.1.4'
+  libraryVersion = '0.1.5'
 
   libraryDescription = 'Free PlacePicker for Android using Google Maps'
   siteUrl = 'https://github.com/suchoX/PlacePicker'
@@ -31,7 +31,7 @@ android {
     minSdkVersion 14
     targetSdkVersion 28
     versionCode 1
-    versionName "0.1.4"
+    versionName "0.1.5"
 
   }
 
