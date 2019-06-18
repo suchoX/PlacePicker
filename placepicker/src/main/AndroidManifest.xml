@@ -8,7 +8,7 @@
     <activity
         android:name=".PlacePickerActivity"
         android:label="@string/title_activity_place_picker"
-        android:theme="@style/AppTheme"/>
+        android:theme="@style/PlacePickerTheme"/>
   </application>
 
 </manifest>
