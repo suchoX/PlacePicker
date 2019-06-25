@@ -97,7 +97,6 @@ class CurrentPlaceSelectionBottomSheet @JvmOverloads constructor(
     bottomSheetBehavior!!.peekHeight = rootView.findViewById<View>(R.id.bottom_sheet_header)
         .height
     bottomSheetBehavior!!.state = if (isShowing) STATE_HIDDEN else STATE_COLLAPSED
-    bottomSheetBehavior!!.isHideable = isShowing
   }
 
 }
