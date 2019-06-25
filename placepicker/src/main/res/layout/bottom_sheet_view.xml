@@ -12,14 +12,14 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
-      android:src="@drawable/ic_check"
-      android:tint="@color/white"
+      android:scaleType="center"
       app:backgroundTint="@color/colorPrimary"
       app:elevation="3dp"
+      app:fabSize="normal"
       app:layout_anchor="@id/root_bottom_sheet"
       app:layout_anchorGravity="top|end"
-      app:fabSize="normal"
-      android:scaleType="center"
+      app:srcCompat="@drawable/ic_check"
+      app:tint="@color/white"
       />
 
   <LinearLayout

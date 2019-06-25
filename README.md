@@ -56,4 +56,27 @@ override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
     }
 ```
 
+
+If you are using Java instead of Kotlin:
+```java
+Intent intent = new PlacePicker.IntentBuilder()
+                ...
+                
+                startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);
+                
+                ...
+
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == Constants.PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+              AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+```
+
+
 **Note:** This is inspired from Mapbox [Android Place Picker plugin](https://docs.mapbox.com/android/plugins/examples/place-picker/). Code and UI has been reused from the open source library hosted on [Github](https://github.com/mapbox/mapbox-plugins-android). Their copyright license has been added [here](https://github.com/suchoX/PlacePicker/blob/master/LICENSE)
