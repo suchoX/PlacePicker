@@ -19,7 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.Locale
+import java.util.*
 
 class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -130,9 +130,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
             .setInterpolator(OvershootInterpolator())
             .setDuration(250)
             .start()
-        if (bottomSheet.isShowing) {
-          bottomSheet.dismissPlaceDetails()
-        }
       }
     }
 
