@@ -7,21 +7,6 @@
     android:layout_gravity="bottom"
     >
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-      android:id="@+id/place_chosen_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="16dp"
-      android:scaleType="center"
-      app:backgroundTint="@color/colorPrimary"
-      app:elevation="3dp"
-      app:fabSize="normal"
-      app:layout_anchor="@id/root_bottom_sheet"
-      app:layout_anchorGravity="top|end"
-      app:srcCompat="@drawable/ic_check"
-      app:tint="@color/white"
-      />
-
   <LinearLayout
       android:id="@+id/root_bottom_sheet"
       android:layout_width="match_parent"
@@ -34,5 +19,20 @@
         layout="@layout/bottom_header_view"/>
 
   </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/place_chosen_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:scaleType="center"
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="3dp"
+            app:fabSize="normal"
+            app:layout_anchor="@id/root_bottom_sheet"
+            app:layout_anchorGravity="top|end"
+            app:srcCompat="@drawable/ic_check"
+            app:tint="@color/white"
+    />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     >
 
+    <fragment
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".PlacePickerActivity"
+    />
+
   <ImageView
       android:id="@+id/marker_image_view"
       android:layout_width="wrap_content"
@@ -31,18 +44,6 @@
       app:layout_constraintTop_toTopOf="@+id/marker_image_view"
       app:layout_constraintVertical_bias="0.0"
       app:srcCompat="@drawable/marker_shadow"
-      />
-  <fragment
-      xmlns:tools="http://schemas.android.com/tools"
-      android:id="@+id/map"
-      android:name="com.google.android.gms.maps.SupportMapFragment"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:context=".PlacePickerActivity"
       />
 
   <com.sucho.placepicker.CurrentPlaceSelectionBottomSheet
