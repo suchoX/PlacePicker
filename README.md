@@ -40,6 +40,8 @@ val intent = PlacePicker.IntentBuilder()
                 .setFabColor(R.color.fabColor)
                 .setPrimaryTextColor(R.color.primaryTextColor) // Change text color of Shortened Address
                 .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
+                .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style
+                .setMapType(MapType.NORMAL)
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
 ```
