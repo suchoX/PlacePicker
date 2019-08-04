@@ -56,6 +56,7 @@ class PlacePicker {
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
+      intent.putExtra(Constants.ADDRESS_REQUIRED_INTENT, addressRequired)
       intent.putExtra(Constants.SHOW_LAT_LONG_INTENT, showLatLong)
       intent.putExtra(Constants.INITIAL_LATITUDE_INTENT, latitude)
       intent.putExtra(Constants.INITIAL_LONGITUDE_INTENT, longitude)
