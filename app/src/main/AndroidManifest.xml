@@ -12,17 +12,16 @@
 
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="Place your Key Here"/>
+                android:value="***REMOVED***-pyjw"/>
 
         <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".MainActivityJava">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivityJava"/>
     </application>
 
 </manifest>

@@ -49,6 +49,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var secondaryTextColorRes: Int = -1
   private var mapRawResourceStyleRes: Int = -1
   private var addresses: List<Address>? = null
+  private var mapType: MapType = MapType.NORMAL
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -102,6 +103,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     primaryTextColorRes = intent.getIntExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, -1)
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
+    mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
   }
 
   private fun setIntentCustomization() {
@@ -158,6 +160,14 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
     if (mapRawResourceStyleRes != -1) {
       map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, mapRawResourceStyleRes))
+    }
+    map.mapType = when(mapType) {
+      MapType.NORMAL -> GoogleMap.MAP_TYPE_NORMAL
+      MapType.SATELLITE -> GoogleMap.MAP_TYPE_SATELLITE
+      MapType.HYBRID -> GoogleMap.MAP_TYPE_HYBRID
+      MapType.TERRAIN -> GoogleMap.MAP_TYPE_TERRAIN
+      MapType.NONE -> GoogleMap.MAP_TYPE_NONE
+      else -> GoogleMap.MAP_TYPE_NORMAL
     }
   }
 

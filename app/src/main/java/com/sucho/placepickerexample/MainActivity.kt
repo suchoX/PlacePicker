@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.sucho.placepicker.AddressData
 import com.sucho.placepicker.Constants
+import com.sucho.placepicker.MapType
 import com.sucho.placepicker.PlacePicker
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
                 .setLatLong(40.748672, -73.985628)
                 .showLatLong(true)
                 .setMapRawResourceStyle(R.raw.map_style)
+                .setMapType(MapType.NORMAL)
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
         }

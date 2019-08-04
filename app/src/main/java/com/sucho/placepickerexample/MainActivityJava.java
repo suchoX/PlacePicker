@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.sucho.placepicker.AddressData;
 import com.sucho.placepicker.Constants;
+import com.sucho.placepicker.MapType;
 import com.sucho.placepicker.PlacePicker;
 
 public class MainActivityJava extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class MainActivityJava extends AppCompatActivity {
                         .setLatLong(40.748672, -73.985628)
                         .showLatLong(true)
                         .setMapRawResourceStyle(R.raw.map_style)
+                        .setMapType(MapType.NORMAL)
                         .build(MainActivityJava.this);
 
                 startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);
