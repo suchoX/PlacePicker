@@ -16,7 +16,7 @@ Include the following dependencies in your app's build.gradle :
 ```
 dependencies {
   implementation 'com.google.android.gms:play-services-maps:16.1.0'
-  implementation 'com.sucho:placepicker:0.1.6'
+  implementation 'com.sucho:placepicker:0.1.7'
   
   implementation 'com.google.android.material:material:1.1.0-alpha01'
 }
@@ -77,6 +77,12 @@ Intent intent = new PlacePicker.IntentBuilder()
         }
     }
 ```
+
+## Changelog
+
+### [0.1.7]
+- Option of Map Type (Normal, Satellite, Terrain, Hybrid, None)
+- Map Styling
 
 
 **Note:** This is inspired from Mapbox [Android Place Picker plugin](https://docs.mapbox.com/android/plugins/examples/place-picker/). Code and UI has been reused from the open source library hosted on [Github](https://github.com/mapbox/mapbox-plugins-android). Their copyright license has been added [here](https://github.com/suchoX/PlacePicker/blob/master/LICENSE)
