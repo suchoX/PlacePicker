@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
             val intent = PlacePicker.IntentBuilder()
                 .setLatLong(40.748672, -73.985628)
                 .showLatLong(true)
+                .setMapRawResourceStyle(R.raw.map_style)
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
         }

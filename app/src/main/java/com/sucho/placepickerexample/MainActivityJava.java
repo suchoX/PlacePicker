@@ -25,6 +25,7 @@ public class MainActivityJava extends AppCompatActivity {
                 Intent intent = new PlacePicker.IntentBuilder()
                         .setLatLong(40.748672, -73.985628)
                         .showLatLong(true)
+                        .setMapRawResourceStyle(R.raw.map_style)
                         .build(MainActivityJava.this);
 
                 startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);

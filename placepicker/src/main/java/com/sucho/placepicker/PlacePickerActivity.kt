@@ -18,8 +18,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.*
+import java.util.Locale
 
 class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -46,6 +47,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var fabColorRes: Int = -1
   private var primaryTextColorRes: Int = -1
   private var secondaryTextColorRes: Int = -1
+  private var mapRawResourceStyleRes: Int = -1
   private var addresses: List<Address>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,6 +101,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     fabColorRes = intent.getIntExtra(Constants.FAB_COLOR_RES_INTENT, -1)
     primaryTextColorRes = intent.getIntExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, -1)
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
+    mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
   }
 
   private fun setIntentCustomization() {
@@ -112,10 +115,10 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     if (fabColorRes != -1) {
       fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
     }
-    if(primaryTextColorRes!=-1) {
+    if (primaryTextColorRes != -1) {
       bottomSheet.setPrimaryTextColor(ContextCompat.getColor(this, primaryTextColorRes))
     }
-    if(secondaryTextColorRes!=-1) {
+    if (secondaryTextColorRes != -1) {
       bottomSheet.setSecondaryTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
     }
   }
@@ -130,6 +133,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
             .setInterpolator(OvershootInterpolator())
             .setDuration(250)
             .start()
+        if (bottomSheet.isShowing) {
+          bottomSheet.dismissPlaceDetails()
+        }
       }
     }
 
@@ -150,6 +156,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
+    if (mapRawResourceStyleRes != -1) {
+      map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, mapRawResourceStyleRes))
+    }
   }
 
   private fun getAddressForLocation() {

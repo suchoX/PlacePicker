@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
 
 class PlacePicker {
 
@@ -21,6 +22,7 @@ class PlacePicker {
     private var fabBackgroundColorRes: Int = -1
     private var primaryTextColorRes: Int = -1
     private var secondaryTextColorRes: Int = -1
+    private var mapRawResourceStyleRes: Int = -1
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -53,6 +55,8 @@ class PlacePicker {
 
     fun setSecondaryTextColor(@ColorRes secondaryTextColorRes: Int) = apply { this.secondaryTextColorRes = secondaryTextColorRes }
 
+    fun setMapRawResourceStyle(@RawRes mapRawResourceStyleRes: Int) = apply { this.mapRawResourceStyleRes = mapRawResourceStyleRes }
+
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -67,6 +71,7 @@ class PlacePicker {
       intent.putExtra(Constants.FAB_COLOR_RES_INTENT, fabBackgroundColorRes)
       intent.putExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, primaryTextColorRes)
       intent.putExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, secondaryTextColorRes)
+      intent.putExtra(Constants.MAP_RAW_STYLE_RES_INTENT, mapRawResourceStyleRes)
       return intent
     }
   }
