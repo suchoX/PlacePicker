@@ -62,7 +62,7 @@ class PlacePicker {
 
     fun setMapType(mapType: MapType) = apply { this.mapType = mapType }
 
-    fun setOnlyCoordinates(onlyCoordinates: Boolean) = apply { this.onlyCoordinates = onlyCoordinates }
+    fun onlyCoordinates(onlyCoordinates: Boolean) = apply { this.onlyCoordinates = onlyCoordinates }
 
     fun disableBootomSheetAnimation(disableBottomSheetAnimation: Boolean) = apply { this.disableBottomSheetAnimation = disableBottomSheetAnimation}
 
