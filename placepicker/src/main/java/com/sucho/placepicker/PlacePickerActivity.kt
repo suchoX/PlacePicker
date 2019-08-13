@@ -50,6 +50,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var mapRawResourceStyleRes: Int = -1
   private var addresses: List<Address>? = null
   private var mapType: MapType = MapType.NORMAL
+  private var onlyCoordinates: Boolean = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -67,27 +68,34 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     fab = findViewById(R.id.place_chosen_button)
 
     fab.setOnClickListener {
-      if (addresses != null) {
-        val addressData = AddressData(latitude, longitude, addresses)
-        val returnIntent = Intent()
-        returnIntent.putExtra(Constants.ADDRESS_INTENT, addressData)
-        setResult(RESULT_OK, returnIntent)
-        finish()
+      if (onlyCoordinates) {
+        sendOnlyCoordinates()
       } else {
-        if (!addressRequired) {
-          val addressData = AddressData(latitude, longitude, null)
+        if (addresses != null) {
+          val addressData = AddressData(latitude, longitude, addresses)
           val returnIntent = Intent()
           returnIntent.putExtra(Constants.ADDRESS_INTENT, addressData)
           setResult(RESULT_OK, returnIntent)
           finish()
         } else {
-          Toast.makeText(this@PlacePickerActivity, R.string.no_address, Toast.LENGTH_LONG)
+          if (!addressRequired) {
+            sendOnlyCoordinates()
+          } else {
+            Toast.makeText(this@PlacePickerActivity, R.string.no_address, Toast.LENGTH_LONG)
               .show()
+          }
         }
       }
     }
-
     setIntentCustomization()
+  }
+
+  private fun sendOnlyCoordinates() {
+    val addressData = AddressData(latitude, longitude, null)
+    val returnIntent = Intent()
+    returnIntent.putExtra(Constants.ADDRESS_INTENT, addressData)
+    setResult(RESULT_OK, returnIntent)
+    finish()
   }
 
   private fun getIntentData() {
@@ -104,6 +112,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
     mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
+    onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
   }
 
   private fun setIntentCustomization() {

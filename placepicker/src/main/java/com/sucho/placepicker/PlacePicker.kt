@@ -24,6 +24,7 @@ class PlacePicker {
     private var secondaryTextColorRes: Int = -1
     private var mapRawResourceStyleRes: Int = -1
     private var mapType: MapType = MapType.NORMAL
+    private var onlyCoordinates: Boolean = false
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -60,6 +61,8 @@ class PlacePicker {
 
     fun setMapType(mapType: MapType) = apply { this.mapType = mapType }
 
+    fun setOnlyCoordinates(onlyCoordinates: Boolean) = apply { this.onlyCoordinates = onlyCoordinates }
+
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -76,6 +79,7 @@ class PlacePicker {
       intent.putExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, secondaryTextColorRes)
       intent.putExtra(Constants.MAP_RAW_STYLE_RES_INTENT, mapRawResourceStyleRes)
       intent.putExtra(Constants.MAP_TYPE_INTENT, mapType)
+      intent.putExtra(Constants.ONLY_COORDINATES_INTENT, onlyCoordinates)
       return intent
     }
   }
