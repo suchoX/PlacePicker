@@ -51,6 +51,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var addresses: List<Address>? = null
   private var mapType: MapType = MapType.NORMAL
   private var onlyCoordinates: Boolean = false
+  private var disableBottomSheetAnimation: Boolean = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -113,6 +114,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
     mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
+    disableBottomSheetAnimation = intent.getBooleanExtra(Constants.DISABLE_BOTTOM_SHEET_ANIMATION_INTENT, false)
   }
 
   private fun setIntentCustomization() {
@@ -144,7 +146,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
             .setInterpolator(OvershootInterpolator())
             .setDuration(250)
             .start()
-        if (bottomSheet.isShowing) {
+        if (bottomSheet.isShowing && !disableBottomSheetAnimation) {
           bottomSheet.dismissPlaceDetails()
         }
       }

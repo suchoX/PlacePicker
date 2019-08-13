@@ -25,6 +25,7 @@ class PlacePicker {
     private var mapRawResourceStyleRes: Int = -1
     private var mapType: MapType = MapType.NORMAL
     private var onlyCoordinates: Boolean = false
+    private var disableBottomSheetAnimation: Boolean = false
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -63,6 +64,8 @@ class PlacePicker {
 
     fun setOnlyCoordinates(onlyCoordinates: Boolean) = apply { this.onlyCoordinates = onlyCoordinates }
 
+    fun disableBootomSheetAnimation(disableBottomSheetAnimation: Boolean) = apply { this.disableBottomSheetAnimation = disableBottomSheetAnimation}
+
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -80,6 +83,7 @@ class PlacePicker {
       intent.putExtra(Constants.MAP_RAW_STYLE_RES_INTENT, mapRawResourceStyleRes)
       intent.putExtra(Constants.MAP_TYPE_INTENT, mapType)
       intent.putExtra(Constants.ONLY_COORDINATES_INTENT, onlyCoordinates)
+      intent.putExtra(Constants.DISABLE_BOTTOM_SHEET_ANIMATION_INTENT, disableBottomSheetAnimation)
       return intent
     }
   }
