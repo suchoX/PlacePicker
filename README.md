@@ -16,7 +16,7 @@ Include the following dependencies in your app's build.gradle :
 ```
 dependencies {
   implementation 'com.google.android.gms:play-services-maps:16.1.0'
-  implementation 'com.sucho:placepicker:0.1.7'
+  implementation 'com.sucho:placepicker:0.1.8'
   
   implementation 'com.google.android.material:material:1.1.0-alpha01'
 }
@@ -42,6 +42,8 @@ val intent = PlacePicker.IntentBuilder()
                 .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
                 .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style
                 .setMapType(MapType.NORMAL)
+                .disableBootomSheetAnimation(true)
+                .onlyCoordinates(true)  //Get only Coordinates from Place Picker
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
 ```
@@ -85,6 +87,10 @@ Intent intent = new PlacePicker.IntentBuilder()
 ### [0.1.7]
 - Option of Map Type (Normal, Satellite, Terrain, Hybrid, None)
 - Map Styling
+
+### [0.1.8]
+- Option disable bottom sheet animation
+- Option to get only coordinates from Place Picker
 
 
 **Note:** This is inspired from Mapbox [Android Place Picker plugin](https://docs.mapbox.com/android/plugins/examples/place-picker/). Code and UI has been reused from the open source library hosted on [Github](https://github.com/mapbox/mapbox-plugins-android). Their copyright license has been added [here](https://github.com/suchoX/PlacePicker/blob/master/LICENSE)
