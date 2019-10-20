@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <fragment
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context=".PlacePickerActivity"
-    />
+  <fragment
+      android:id="@+id/map"
+      android:name="com.google.android.gms.maps.SupportMapFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:context=".PlacePickerActivity"
+      />
 
   <ImageView
       android:id="@+id/marker_image_view"
@@ -46,14 +46,89 @@
       app:srcCompat="@drawable/marker_shadow"
       />
 
-  <com.sucho.placepicker.CurrentPlaceSelectionBottomSheet
-      android:id="@+id/bottom_sheet"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      app:layout_constraintBottom_toBottomOf="parent"
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/place_chosen_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="18dp"
+      android:layout_marginEnd="18dp"
+      android:layout_marginRight="18dp"
+      android:scaleType="center"
+      app:backgroundTint="@color/colorPrimary"
+      app:elevation="3dp"
+      app:fabSize="normal"
+      app:layout_constraintBottom_toTopOf="@+id/info_layout"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/ic_check"
+      app:tint="@color/white"
       />
+
+  <FrameLayout
+      android:id="@+id/info_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        >
+      <TextView
+          android:id="@+id/text_view_place_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:textColor="@color/colorPrimaryDark"
+          android:textSize="20sp"
+          tools:text="Normal House"
+          />
+
+      <TextView
+          android:id="@+id/text_view_place_address"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:textColor="@color/colorPrimary"
+          android:textSize="16sp"
+          android:textStyle="normal"
+          tools:text="Empire State Building"
+          />
+
+
+      <TextView
+          android:id="@+id/text_view_place_coordinates"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:textColor="@color/textGrey"
+          android:textSize="12sp"
+          android:textStyle="normal"
+          tools:text="-1.0, -1.0"
+          />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        style="?android:attr/progressBarStyle"
+        />
+
+  </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

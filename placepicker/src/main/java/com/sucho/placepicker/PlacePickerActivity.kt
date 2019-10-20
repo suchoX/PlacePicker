@@ -4,12 +4,15 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.location.Address
 import android.location.Geocoder
+import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -31,8 +34,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private lateinit var map: GoogleMap
   private lateinit var markerImage: ImageView
   private lateinit var markerShadowImage: ImageView
-  private lateinit var bottomSheet: CurrentPlaceSelectionBottomSheet
   private lateinit var fab: FloatingActionButton
+  private lateinit var placeNameTextView: TextView
+  private lateinit var placeAddressTextView: TextView
+  private lateinit var placeCoordinatesTextView: TextView
+  private lateinit var placeProgressBar: ProgressBar
 
   private var latitude = Constants.DEFAULT_LATITUDE
   private var longitude = Constants.DEFAULT_LONGITUDE
@@ -51,7 +57,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var addresses: List<Address>? = null
   private var mapType: MapType = MapType.NORMAL
   private var onlyCoordinates: Boolean = false
-  private var disableBottomSheetAnimation: Boolean = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -61,12 +66,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     val mapFragment = supportFragmentManager
         .findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(this)
-
-    bottomSheet = findViewById(R.id.bottom_sheet)
-    bottomSheet.showCoordinatesTextView(showLatLong)
-    markerImage = findViewById(R.id.marker_image_view)
-    markerShadowImage = findViewById(R.id.marker_shadow_image_view)
-    fab = findViewById(R.id.place_chosen_button)
+    bindViews()
+    placeCoordinatesTextView.visibility = if (showLatLong) View.VISIBLE else View.GONE
 
     fab.setOnClickListener {
       if (onlyCoordinates) {
@@ -89,6 +90,16 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     }
     setIntentCustomization()
+  }
+
+  private fun bindViews() {
+    markerImage = findViewById(R.id.marker_image_view)
+    markerShadowImage = findViewById(R.id.marker_shadow_image_view)
+    fab = findViewById(R.id.place_chosen_button)
+    placeNameTextView = findViewById(R.id.text_view_place_name)
+    placeAddressTextView = findViewById(R.id.text_view_place_address)
+    placeCoordinatesTextView = findViewById(R.id.text_view_place_coordinates)
+    placeProgressBar = findViewById(R.id.progress_bar_place)
   }
 
   private fun sendOnlyCoordinates() {
@@ -114,7 +125,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
     mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
-    disableBottomSheetAnimation = intent.getBooleanExtra(Constants.DISABLE_BOTTOM_SHEET_ANIMATION_INTENT, false)
   }
 
   private fun setIntentCustomization() {
@@ -129,10 +139,10 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
     }
     if (primaryTextColorRes != -1) {
-      bottomSheet.setPrimaryTextColor(ContextCompat.getColor(this, primaryTextColorRes))
+      placeNameTextView.setTextColor(ContextCompat.getColor(this, primaryTextColorRes))
     }
     if (secondaryTextColorRes != -1) {
-      bottomSheet.setSecondaryTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
+      placeAddressTextView.setTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
     }
   }
 
@@ -146,9 +156,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
             .setInterpolator(OvershootInterpolator())
             .setDuration(250)
             .start()
-        if (bottomSheet.isShowing && !disableBottomSheetAnimation) {
-          bottomSheet.dismissPlaceDetails()
-        }
       }
     }
 
@@ -159,13 +166,13 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
           .setDuration(250)
           .start()
 
-      bottomSheet.showLoadingBottomDetails()
+      showLoadingBottomDetails()
       val latLng = map.cameraPosition.target
       latitude = latLng.latitude
       longitude = latLng.longitude
       AsyncTask.execute {
         getAddressForLocation()
-        runOnUiThread { bottomSheet.setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
+        runOnUiThread { setPlaceDetails(latitude, longitude, shortAddress, fullAddress) }
       }
     }
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
@@ -180,6 +187,33 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       MapType.NONE -> GoogleMap.MAP_TYPE_NONE
       else -> GoogleMap.MAP_TYPE_NORMAL
     }
+  }
+
+  private fun showLoadingBottomDetails() {
+    placeNameTextView.text = ""
+    placeAddressTextView.text = ""
+    placeCoordinatesTextView.text = ""
+    placeProgressBar.visibility = View.VISIBLE
+  }
+
+  private fun setPlaceDetails(
+    latitude: Double,
+    longitude: Double,
+    shortAddress: String,
+    fullAddress: String
+  ) {
+
+    if (latitude == -1.0 || longitude == -1.0) {
+      placeNameTextView.text = ""
+      placeAddressTextView.text = ""
+      placeProgressBar.visibility = View.VISIBLE
+      return
+    }
+    placeProgressBar.visibility = View.INVISIBLE
+
+    placeNameTextView.text = if (shortAddress.isEmpty()) "Dropped Pin" else shortAddress
+    placeAddressTextView.text = fullAddress
+    placeCoordinatesTextView.text = Location.convert(latitude, Location.FORMAT_DEGREES) + ", " + Location.convert(longitude, Location.FORMAT_DEGREES)
   }
 
   private fun getAddressForLocation() {
