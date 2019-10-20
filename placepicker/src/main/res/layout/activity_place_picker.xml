@@ -19,31 +19,32 @@
       tools:context=".PlacePickerActivity"
       />
 
+
+  <ImageView
+      android:id="@+id/marker_shadow_image_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:adjustViewBounds="true"
+      android:elevation="1dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/marker_image_view"
+      app:srcCompat="@drawable/marker_shadow"
+      />
+
   <ImageView
       android:id="@+id/marker_image_view"
       android:layout_width="wrap_content"
       android:layout_height="47dp"
       android:adjustViewBounds="true"
+      android:layout_marginBottom="47dp"
       android:elevation="2dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/ic_map_marker"
-      />
-
-  <ImageView
-      android:id="@+id/marker_shadow_image_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:elevation="1dp"
-      app:layout_constraintBottom_toBottomOf="@+id/map"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="@+id/marker_image_view"
-      app:layout_constraintVertical_bias="0.0"
-      app:srcCompat="@drawable/marker_shadow"
       />
 
 
