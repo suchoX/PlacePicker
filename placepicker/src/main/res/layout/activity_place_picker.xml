@@ -48,6 +48,23 @@
 
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/my_location_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:layout_marginEnd="18dp"
+      android:layout_marginRight="18dp"
+      android:scaleType="center"
+      app:backgroundTint="@color/colorPrimary"
+      app:elevation="3dp"
+      app:fabSize="mini"
+      app:layout_constraintBottom_toTopOf="@+id/place_chosen_button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:srcCompat="@drawable/ic_my_location"
+      app:tint="@color/white"
+      />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
       android:id="@+id/place_chosen_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

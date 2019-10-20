@@ -34,7 +34,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private lateinit var map: GoogleMap
   private lateinit var markerImage: ImageView
   private lateinit var markerShadowImage: ImageView
-  private lateinit var fab: FloatingActionButton
+  private lateinit var placeSelectedFab: FloatingActionButton
+  private lateinit var myLocationFab: FloatingActionButton
   private lateinit var placeNameTextView: TextView
   private lateinit var placeAddressTextView: TextView
   private lateinit var placeCoordinatesTextView: TextView
@@ -42,6 +43,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   private var latitude = Constants.DEFAULT_LATITUDE
   private var longitude = Constants.DEFAULT_LONGITUDE
+  private var initLatitude = Constants.DEFAULT_LATITUDE
+  private var initLongitude = Constants.DEFAULT_LONGITUDE
   private var showLatLong = true
   private var zoom = Constants.DEFAULT_ZOOM
   private var addressRequired: Boolean = true
@@ -69,7 +72,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     bindViews()
     placeCoordinatesTextView.visibility = if (showLatLong) View.VISIBLE else View.GONE
 
-    fab.setOnClickListener {
+    placeSelectedFab.setOnClickListener {
       if (onlyCoordinates) {
         sendOnlyCoordinates()
       } else {
@@ -89,13 +92,18 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
         }
       }
     }
+
+    myLocationFab.setOnClickListener {
+      map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(initLatitude, initLongitude), zoom))
+    }
     setIntentCustomization()
   }
 
   private fun bindViews() {
     markerImage = findViewById(R.id.marker_image_view)
     markerShadowImage = findViewById(R.id.marker_shadow_image_view)
-    fab = findViewById(R.id.place_chosen_button)
+    placeSelectedFab = findViewById(R.id.place_chosen_button)
+    myLocationFab = findViewById(R.id.my_location_button)
     placeNameTextView = findViewById(R.id.text_view_place_name)
     placeAddressTextView = findViewById(R.id.text_view_place_address)
     placeCoordinatesTextView = findViewById(R.id.text_view_place_coordinates)
@@ -113,6 +121,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private fun getIntentData() {
     latitude = intent.getDoubleExtra(Constants.INITIAL_LATITUDE_INTENT, Constants.DEFAULT_LATITUDE)
     longitude = intent.getDoubleExtra(Constants.INITIAL_LONGITUDE_INTENT, Constants.DEFAULT_LONGITUDE)
+    initLatitude = latitude
+    initLongitude = longitude
     showLatLong = intent.getBooleanExtra(Constants.SHOW_LAT_LONG_INTENT, false)
     addressRequired = intent.getBooleanExtra(Constants.ADDRESS_REQUIRED_INTENT, true)
     hideMarkerShadow = intent.getBooleanExtra(Constants.HIDE_MARKER_SHADOW_INTENT, false)
@@ -136,7 +146,8 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
     }
     if (fabColorRes != -1) {
-      fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
+      placeSelectedFab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
+      myLocationFab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
     }
     if (primaryTextColorRes != -1) {
       placeNameTextView.setTextColor(ContextCompat.getColor(this, primaryTextColorRes))
