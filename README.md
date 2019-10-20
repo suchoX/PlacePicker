@@ -16,7 +16,7 @@ Include the following dependencies in your app's build.gradle :
 ```
 dependencies {
   implementation 'com.google.android.gms:play-services-maps:16.1.0'
-  implementation 'com.sucho:placepicker:0.1.8'
+  implementation 'com.sucho:placepicker:1.0.0'
   
   implementation 'com.google.android.material:material:1.1.0-alpha01'
 }
@@ -40,9 +40,8 @@ val intent = PlacePicker.IntentBuilder()
                 .setFabColor(R.color.fabColor)
                 .setPrimaryTextColor(R.color.primaryTextColor) // Change text color of Shortened Address
                 .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
-                .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style
+                .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style (https://mapstyle.withgoogle.com/)
                 .setMapType(MapType.NORMAL)
-                .disableBootomSheetAnimation(true)
                 .onlyCoordinates(true)  //Get only Coordinates from Place Picker
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
@@ -91,6 +90,11 @@ Intent intent = new PlacePicker.IntentBuilder()
 ### [0.1.8]
 - Option disable bottom sheet animation
 - Option to get only coordinates from Place Picker
+
+### [1.0.0]
+- Added My Location Button
+- Fixed Map Marker not precise
+- Fixed Bottom Sheet
 
 
 **Note:** This is inspired from Mapbox [Android Place Picker plugin](https://docs.mapbox.com/android/plugins/examples/place-picker/). Code and UI has been reused from the open source library hosted on [Github](https://github.com/mapbox/mapbox-plugins-android). Their copyright license has been added [here](https://github.com/suchoX/PlacePicker/blob/master/LICENSE)
