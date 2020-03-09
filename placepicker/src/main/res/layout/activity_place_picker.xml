@@ -7,7 +7,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-  <fragment
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="3dp"
+        android:background="@android:color/white"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <fragment
+            android:id="@+id/place_autocomplete"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.cardview.widget.CardView>
+
+    <fragment
       android:id="@+id/map"
       android:name="com.google.android.gms.maps.SupportMapFragment"
       android:layout_width="match_parent"

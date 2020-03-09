@@ -20,4 +20,5 @@ object Constants {
   const val DEFAULT_ZOOM = 14.0F
   const val PLACE_PICKER_REQUEST = 100
   const val ADDRESS_INTENT = "ADDRESS_INTENT"
+  const val GOOGLE_API_KEY = "GOOGLE_API_KEY"
 }

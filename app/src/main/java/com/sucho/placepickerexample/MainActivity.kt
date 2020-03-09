@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
                 .showLatLong(true)
                 .setMapRawResourceStyle(R.raw.map_style)
                 .setMapType(MapType.NORMAL)
+                .setPlaceSearchBar(getString(R.string.google_maps_key))
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
         }

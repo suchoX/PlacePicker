@@ -16,14 +16,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.Locale
+import kotlinx.android.synthetic.main.activity_place_picker.*
+import java.util.*
 
 class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -32,6 +38,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   }
 
   private lateinit var map: GoogleMap
+  private lateinit var placeAutocomplete: AutocompleteSupportFragment
+  private var googleApiKey: String? = null
+
   private lateinit var markerImage: ImageView
   private lateinit var markerShadowImage: ImageView
   private lateinit var placeSelectedFab: FloatingActionButton
@@ -65,6 +74,11 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_place_picker)
     getIntentData()
+
+    if (googleApiKey != null) {
+      showSearchBar()
+    }
+
     // Obtain the SupportMapFragment and get notified when the map is ready to be used.
     val mapFragment = supportFragmentManager
         .findFragmentById(R.id.map) as SupportMapFragment
@@ -97,6 +111,43 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(initLatitude, initLongitude), zoom))
     }
     setIntentCustomization()
+  }
+
+  private fun showSearchBar() {
+    if (!Places.isInitialized()) {
+      Places.initialize(applicationContext, googleApiKey!!)
+    }
+
+    this.card_view.visibility = View.VISIBLE
+    placeAutocomplete = supportFragmentManager.findFragmentById(R.id.place_autocomplete)
+            as AutocompleteSupportFragment
+
+    placeAutocomplete.setPlaceFields(
+      Arrays.asList(
+        Place.Field.ID,
+        Place.Field.NAME,
+        Place.Field.LAT_LNG,
+        Place.Field.ADDRESS,
+        Place.Field.ADDRESS_COMPONENTS
+      )
+    )
+    placeAutocomplete.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+      override fun onPlaceSelected(place: Place) {
+        latitude = place.latLng!!.latitude
+        longitude = place.latLng!!.longitude
+        setAddress(latitude, longitude)
+
+        map.clear()
+        map.setOnMapLoadedCallback {
+          setPlaceDetails(latitude, longitude, shortAddress, fullAddress)
+          map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), zoom))
+        }
+      }
+
+      override fun onError(error: Status) {
+        Log.d(TAG, error.toString())
+      }
+    })
   }
 
   private fun bindViews() {
@@ -135,6 +186,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
     mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
+    googleApiKey = intent.getStringExtra(Constants.GOOGLE_API_KEY)
   }
 
   private fun setIntentCustomization() {
