@@ -27,6 +27,7 @@ class PlacePicker {
     private var onlyCoordinates: Boolean = false
     private var disableBottomSheetAnimation: Boolean = false
     private var googleApiKey: String? = null
+    private var searchBarEnable: Boolean = false
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -43,7 +44,10 @@ class PlacePicker {
       }
     }
 
-    fun setPlaceSearchBar(googleApiKey: String) = apply { this.googleApiKey = googleApiKey }
+    fun setPlaceSearchBar(value: Boolean, googleApiKey: String? = null) = apply {
+      this.googleApiKey = googleApiKey
+      this.searchBarEnable = value
+    }
 
     fun setMapZoom(zoom: Float) = apply { this.zoom = zoom }
 
@@ -85,6 +89,7 @@ class PlacePicker {
       intent.putExtra(Constants.MAP_TYPE_INTENT, mapType)
       intent.putExtra(Constants.ONLY_COORDINATES_INTENT, onlyCoordinates)
       intent.putExtra(Constants.GOOGLE_API_KEY, googleApiKey)
+      intent.putExtra(Constants.SEARCH_BAR_ENABLE, false)
       return intent
     }
   }

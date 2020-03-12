@@ -40,6 +40,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private lateinit var map: GoogleMap
   private lateinit var placeAutocomplete: AutocompleteSupportFragment
   private var googleApiKey: String? = null
+  private var searchBarEnable: Boolean = false
 
   private lateinit var markerImage: ImageView
   private lateinit var markerShadowImage: ImageView
@@ -75,7 +76,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     setContentView(R.layout.activity_place_picker)
     getIntentData()
 
-    if (googleApiKey != null) {
+    if (googleApiKey != null && searchBarEnable) {
       showSearchBar()
     }
 
@@ -187,6 +188,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
     googleApiKey = intent.getStringExtra(Constants.GOOGLE_API_KEY)
+    searchBarEnable = intent.getBooleanExtra(Constants.SEARCH_BAR_ENABLE, false)
   }
 
   private fun setIntentCustomization() {
