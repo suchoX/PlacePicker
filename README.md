@@ -42,6 +42,7 @@ val intent = PlacePicker.IntentBuilder()
                 .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
                 .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style (https://mapstyle.withgoogle.com/)
                 .setMapType(MapType.NORMAL)
+                .setSearchBar(true, GOOGLE_API_KEY) //Activate GooglePlace Search Bar. Default is false/not activated
                 .onlyCoordinates(true)  //Get only Coordinates from Place Picker
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
