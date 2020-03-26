@@ -16,7 +16,7 @@ Include the following dependencies in your app's build.gradle :
 ```
 dependencies {
   implementation 'com.google.android.gms:play-services-maps:16.1.0'
-  implementation 'com.sucho:placepicker:1.0.0'
+  implementation 'com.sucho:placepicker:1.1.0'
   
   implementation 'com.google.android.material:material:1.1.0-alpha01'
 }
@@ -42,7 +42,7 @@ val intent = PlacePicker.IntentBuilder()
                 .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
                 .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style (https://mapstyle.withgoogle.com/)
                 .setMapType(MapType.NORMAL)
-                .setSearchBar(true, GOOGLE_API_KEY) //Activate GooglePlace Search Bar. Default is false/not activated
+                .setSearchBar(true, GOOGLE_API_KEY) //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
                 .onlyCoordinates(true)  //Get only Coordinates from Place Picker
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
@@ -96,6 +96,9 @@ Intent intent = new PlacePicker.IntentBuilder()
 - Added My Location Button
 - Fixed Map Marker not precise
 - Fixed Bottom Sheet
+
+### [1.1.0]
+- Added Optional Search Bar
 
 
 **Note:** This is inspired from Mapbox [Android Place Picker plugin](https://docs.mapbox.com/android/plugins/examples/place-picker/). Code and UI has been reused from the open source library hosted on [Github](https://github.com/mapbox/mapbox-plugins-android). Their copyright license has been added [here](https://github.com/suchoX/PlacePicker/blob/master/LICENSE)
