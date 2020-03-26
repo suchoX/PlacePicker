@@ -89,7 +89,7 @@ class PlacePicker {
       intent.putExtra(Constants.MAP_TYPE_INTENT, mapType)
       intent.putExtra(Constants.ONLY_COORDINATES_INTENT, onlyCoordinates)
       intent.putExtra(Constants.GOOGLE_API_KEY, googleApiKey)
-      intent.putExtra(Constants.SEARCH_BAR_ENABLE, false)
+      intent.putExtra(Constants.SEARCH_BAR_ENABLE, searchBarEnable)
       return intent
     }
   }

@@ -8,15 +8,15 @@
     >
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/search_bar_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginRight="3dp"
+        android:layout_marginEnd="8dp"
         android:background="@android:color/white"
         android:elevation="@dimen/cardview_default_elevation"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

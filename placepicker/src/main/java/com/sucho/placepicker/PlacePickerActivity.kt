@@ -15,6 +15,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,7 +29,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_place_picker.*
 import java.util.*
 
 class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -76,7 +76,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     setContentView(R.layout.activity_place_picker)
     getIntentData()
 
-    if (googleApiKey != null && searchBarEnable) {
+    if (searchBarEnable) {
       showSearchBar()
     }
 
@@ -119,7 +119,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       Places.initialize(applicationContext, googleApiKey!!)
     }
 
-    this.card_view.visibility = View.VISIBLE
+    findViewById<CardView>(R.id.search_bar_card_view).visibility = View.VISIBLE
     placeAutocomplete = supportFragmentManager.findFragmentById(R.id.place_autocomplete)
             as AutocompleteSupportFragment
 

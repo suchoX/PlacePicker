@@ -2,6 +2,7 @@ package com.sucho.placepickerexample
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
 
         findViewById<Button>(R.id.open_place_picker_button).setOnClickListener {
             val intent = PlacePicker.IntentBuilder()
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 .showLatLong(true)
                 .setMapRawResourceStyle(R.raw.map_style)
                 .setMapType(MapType.NORMAL)
-                .setPlaceSearchBar(true, getString(R.string.google_maps_key))
+                .setPlaceSearchBar(true, applicationInfo.metaData.getString("com.google.android.geo.API_KEY"))
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
         }
