@@ -15,10 +15,11 @@ Include the following dependencies in your app's build.gradle :
 
 ```
 dependencies {
-  implementation 'com.google.android.gms:play-services-maps:16.1.0'
   implementation 'com.sucho:placepicker:1.1.1'
-  
-  implementation 'com.google.android.material:material:1.1.0-alpha01'
+
+  implementation 'com.google.android.gms:play-services-maps:17.0.0'
+  implementation 'com.google.android.material:material:1.1.0'
+  implementation 'com.google.android.libraries.places:places:2.2.0'
 }
 ```
 PlacePicker Uses **AndroidX** artifacts, thus to use it without issues, make sure your application has been migrated to AndroidX as well. If you havent done it already, [Here's How](https://developer.android.com/jetpack/androidx/migrate)
