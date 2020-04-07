@@ -107,5 +107,9 @@ Intent intent = new PlacePicker.IntentBuilder()
 ### [1.1.0]
 - Added Optional Search Bar
 
+### [1.1.1]
+- Ability to add custom theme to PlacePickerActivity
+- Change bottom address layout background color
+
 
 **Note:** This is inspired from Mapbox [Android Place Picker plugin](https://docs.mapbox.com/android/plugins/examples/place-picker/). Code and UI has been reused from the open source library hosted on [Github](https://github.com/mapbox/mapbox-plugins-android). Their copyright license has been added [here](https://github.com/suchoX/PlacePicker/blob/master/LICENSE)
