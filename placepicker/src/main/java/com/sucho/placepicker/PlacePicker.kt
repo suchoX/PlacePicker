@@ -22,6 +22,7 @@ class PlacePicker {
     private var fabBackgroundColorRes: Int = -1
     private var primaryTextColorRes: Int = -1
     private var secondaryTextColorRes: Int = -1
+    private var bottomViewColorRes:  Int = -1
     private var mapRawResourceStyleRes: Int = -1
     private var mapType: MapType = MapType.NORMAL
     private var onlyCoordinates: Boolean = false
@@ -65,6 +66,8 @@ class PlacePicker {
 
     fun setSecondaryTextColor(@ColorRes secondaryTextColorRes: Int) = apply { this.secondaryTextColorRes = secondaryTextColorRes }
 
+    fun setBottomViewColor(@ColorRes bottomViewColor: Int) = apply { this.bottomViewColorRes = bottomViewColor }
+
     fun setMapRawResourceStyle(@RawRes mapRawResourceStyleRes: Int) = apply { this.mapRawResourceStyleRes = mapRawResourceStyleRes }
 
     fun setMapType(mapType: MapType) = apply { this.mapType = mapType }
@@ -85,6 +88,7 @@ class PlacePicker {
       intent.putExtra(Constants.FAB_COLOR_RES_INTENT, fabBackgroundColorRes)
       intent.putExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, primaryTextColorRes)
       intent.putExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, secondaryTextColorRes)
+      intent.putExtra(Constants.BOTTOM_VIEW_COLOR_RES_INTENT, bottomViewColorRes)
       intent.putExtra(Constants.MAP_RAW_STYLE_RES_INTENT, mapRawResourceStyleRes)
       intent.putExtra(Constants.MAP_TYPE_INTENT, mapType)
       intent.putExtra(Constants.ONLY_COORDINATES_INTENT, onlyCoordinates)

@@ -22,6 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivityJava"/>
+
+        <activity
+            android:name="com.sucho.placepicker.PlacePickerActivity"
+            android:label="@string/title_activity_place_picker"
+            android:theme="@style/PlacePickerTheme"/>
     </application>
 
 </manifest>

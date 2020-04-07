@@ -16,7 +16,7 @@ Include the following dependencies in your app's build.gradle :
 ```
 dependencies {
   implementation 'com.google.android.gms:play-services-maps:16.1.0'
-  implementation 'com.sucho:placepicker:1.1.0'
+  implementation 'com.sucho:placepicker:1.1.1'
   
   implementation 'com.google.android.material:material:1.1.0-alpha01'
 }
@@ -40,6 +40,7 @@ val intent = PlacePicker.IntentBuilder()
                 .setFabColor(R.color.fabColor)
                 .setPrimaryTextColor(R.color.primaryTextColor) // Change text color of Shortened Address
                 .setSecondaryTextColor(R.color.secondaryTextColor) // Change text color of full Address
+                .setBottomViewColor(R.color.bottomViewColor) // Change Address View Background Color (Default: White)
                 .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style (https://mapstyle.withgoogle.com/)
                 .setMapType(MapType.NORMAL)
                 .setPlaceSearchBar(true, GOOGLE_API_KEY) //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
@@ -60,6 +61,12 @@ override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
     }
 ```
 
+Note: `PlacePickerActivity` uses the default theme of your app. If you want to change the theme, declare it in your app's Manifest:
+```xml
+<activity
+    android:name="com.sucho.placepicker.PlacePickerActivity"
+    android:theme="@style/PlacePickerTheme"/> //Included FullScreen Day-Night Theme
+```
 
 If you are using Java instead of Kotlin:
 ```java

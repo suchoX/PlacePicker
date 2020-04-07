@@ -10,10 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.OvershootInterpolator
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -48,6 +45,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private lateinit var myLocationFab: FloatingActionButton
   private lateinit var placeNameTextView: TextView
   private lateinit var placeAddressTextView: TextView
+  private lateinit var infoLayout: FrameLayout
   private lateinit var placeCoordinatesTextView: TextView
   private lateinit var placeProgressBar: ProgressBar
 
@@ -66,6 +64,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var fabColorRes: Int = -1
   private var primaryTextColorRes: Int = -1
   private var secondaryTextColorRes: Int = -1
+  private var bottomViewColorRes: Int = -1
   private var mapRawResourceStyleRes: Int = -1
   private var addresses: List<Address>? = null
   private var mapType: MapType = MapType.NORMAL
@@ -159,6 +158,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     placeNameTextView = findViewById(R.id.text_view_place_name)
     placeAddressTextView = findViewById(R.id.text_view_place_address)
     placeCoordinatesTextView = findViewById(R.id.text_view_place_coordinates)
+    infoLayout = findViewById(R.id.info_layout)
     placeProgressBar = findViewById(R.id.progress_bar_place)
   }
 
@@ -184,6 +184,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     fabColorRes = intent.getIntExtra(Constants.FAB_COLOR_RES_INTENT, -1)
     primaryTextColorRes = intent.getIntExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, -1)
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
+    bottomViewColorRes = intent.getIntExtra(Constants.BOTTOM_VIEW_COLOR_RES_INTENT, -1)
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
     mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
@@ -208,6 +209,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     if (secondaryTextColorRes != -1) {
       placeAddressTextView.setTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
+    }
+    if (bottomViewColorRes !=-1) {
+        infoLayout.setBackgroundColor(ContextCompat.getColor(this, bottomViewColorRes))
     }
   }
 
