@@ -69,6 +69,10 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var addresses: List<Address>? = null
   private var mapType: MapType = MapType.NORMAL
   private var onlyCoordinates: Boolean = false
+  
+  override fun onBackPressed() {
+	// do something
+}
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
