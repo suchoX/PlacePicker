@@ -15,7 +15,7 @@ Include the following dependencies in your app's build.gradle :
 
 ```
 dependencies {
-  implementation 'com.sucho:placepicker:1.1.1'
+  implementation 'com.sucho:placepicker:1.1.2'
 
   implementation 'com.google.android.gms:play-services-maps:17.0.0'
   implementation 'com.google.android.material:material:1.1.0'
