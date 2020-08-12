@@ -110,7 +110,14 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     myLocationFab.setOnClickListener {
-      map.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(initLatitude, initLongitude), zoom))
+      if(this::map.isInitialized) {
+        map.animateCamera(
+          CameraUpdateFactory.newLatLngZoom(
+            LatLng(initLatitude, initLongitude),
+            zoom
+          )
+        )
+      }
     }
     setIntentCustomization()
   }
