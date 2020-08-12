@@ -70,6 +70,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var mapType: MapType = MapType.NORMAL
   private var onlyCoordinates: Boolean = false
   private var hideLocationButton: Boolean = false
+  private var disableMarkerAnimation: Boolean = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -192,6 +193,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     googleApiKey = intent.getStringExtra(Constants.GOOGLE_API_KEY)
     searchBarEnable = intent.getBooleanExtra(Constants.SEARCH_BAR_ENABLE, false)
     hideLocationButton = intent.getBooleanExtra(Constants.HIDE_LOCATION_BUTTON, false)
+    disableMarkerAnimation = intent.getBooleanExtra(Constants.DISABLE_MARKER_ANIMATION, false)
   }
 
   private fun setIntentCustomization() {
@@ -222,7 +224,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     map = googleMap
 
     map.setOnCameraMoveStartedListener {
-      if (markerImage.translationY == 0f) {
+      if (markerImage.translationY == 0f && !disableMarkerAnimation) {
         markerImage.animate()
             .translationY(-75f)
             .setInterpolator(OvershootInterpolator())
@@ -232,11 +234,13 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     map.setOnCameraIdleListener {
-      markerImage.animate()
+      if(!disableMarkerAnimation) {
+        markerImage.animate()
           .translationY(0f)
           .setInterpolator(OvershootInterpolator())
           .setDuration(250)
           .start()
+      }
 
       showLoadingBottomDetails()
       val latLng = map.cameraPosition.target

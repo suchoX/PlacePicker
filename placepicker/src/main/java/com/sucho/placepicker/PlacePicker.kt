@@ -29,6 +29,7 @@ class PlacePicker {
     private var hideLocation: Boolean = false
     private var googleApiKey: String? = null
     private var searchBarEnable: Boolean = false
+    private var disableMarkerAnimation: Boolean = false
 
     fun showLatLong(showLatLong: Boolean) = apply { this.showLatLong = showLatLong }
 
@@ -76,6 +77,8 @@ class PlacePicker {
 
     fun hideLocationButton(hideLocation: Boolean) = apply { this.hideLocation = hideLocation }
 
+    fun disableMarkerAnimation(disableMarkerAnimation: Boolean) = apply { this.disableMarkerAnimation = disableMarkerAnimation }
+
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -97,6 +100,7 @@ class PlacePicker {
       intent.putExtra(Constants.GOOGLE_API_KEY, googleApiKey)
       intent.putExtra(Constants.SEARCH_BAR_ENABLE, searchBarEnable)
       intent.putExtra(Constants.HIDE_LOCATION_BUTTON, hideLocation)
+      intent.putExtra(Constants.DISABLE_MARKER_ANIMATION, disableMarkerAnimation)
       return intent
     }
   }
