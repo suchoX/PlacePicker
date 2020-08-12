@@ -62,6 +62,7 @@ override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
         }
     }
 ```
+Note: Placepicker DOES NOT access your location. It's your app's responsibility to fet and provide the User's location and send via `setLatLong`. The MyLocation button takes the user in the sent location
 
 Note: `PlacePickerActivity` uses the default theme of your app. If you want to change the theme, declare it in your app's Manifest:
 ```xml
