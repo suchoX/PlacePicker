@@ -26,7 +26,7 @@ class PlacePicker {
     private var mapRawResourceStyleRes: Int = -1
     private var mapType: MapType = MapType.NORMAL
     private var onlyCoordinates: Boolean = false
-    private var disableBottomSheetAnimation: Boolean = false
+    private var hideLocation: Boolean = false
     private var googleApiKey: String? = null
     private var searchBarEnable: Boolean = false
 
@@ -74,6 +74,8 @@ class PlacePicker {
 
     fun onlyCoordinates(onlyCoordinates: Boolean) = apply { this.onlyCoordinates = onlyCoordinates }
 
+    fun hideLocationButton(hideLocation: Boolean) = apply { this.hideLocation = hideLocation }
+
     fun build(activity: Activity): Intent {
       this.activity = activity
       val intent = Intent(activity, PlacePickerActivity::class.java)
@@ -94,6 +96,7 @@ class PlacePicker {
       intent.putExtra(Constants.ONLY_COORDINATES_INTENT, onlyCoordinates)
       intent.putExtra(Constants.GOOGLE_API_KEY, googleApiKey)
       intent.putExtra(Constants.SEARCH_BAR_ENABLE, searchBarEnable)
+      intent.putExtra(Constants.HIDE_LOCATION_BUTTON, hideLocation)
       return intent
     }
   }

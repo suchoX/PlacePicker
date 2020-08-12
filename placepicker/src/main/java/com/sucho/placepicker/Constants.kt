@@ -23,4 +23,5 @@ object Constants {
   const val ADDRESS_INTENT = "ADDRESS_INTENT"
   const val GOOGLE_API_KEY = "GOOGLE_API_KEY"
   const val SEARCH_BAR_ENABLE = "SEARCH_BAR_ENABLE"
+  const val HIDE_LOCATION_BUTTON = "HIDE_LOCATION"
 }

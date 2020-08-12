@@ -69,6 +69,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var addresses: List<Address>? = null
   private var mapType: MapType = MapType.NORMAL
   private var onlyCoordinates: Boolean = false
+  private var hideLocationButton: Boolean = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -190,6 +191,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
     googleApiKey = intent.getStringExtra(Constants.GOOGLE_API_KEY)
     searchBarEnable = intent.getBooleanExtra(Constants.SEARCH_BAR_ENABLE, false)
+    hideLocationButton = intent.getBooleanExtra(Constants.HIDE_LOCATION_BUTTON, false)
   }
 
   private fun setIntentCustomization() {
@@ -213,6 +215,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     if (bottomViewColorRes !=-1) {
         infoLayout.setBackgroundColor(ContextCompat.getColor(this, bottomViewColorRes))
     }
+    myLocationFab.visibility = if(hideLocationButton) View.INVISIBLE else View.VISIBLE
   }
 
   override fun onMapReady(googleMap: GoogleMap) {

@@ -46,6 +46,7 @@ val intent = PlacePicker.IntentBuilder()
                 .setMapType(MapType.NORMAL)
                 .setPlaceSearchBar(true, GOOGLE_API_KEY) //Activate GooglePlace Search Bar. Default is false/not activated. SearchBar is a chargeable feature by Google
                 .onlyCoordinates(true)  //Get only Coordinates from Place Picker
+                .hideLocationButton(true)   //Hide Location Button (Default: false)
                 .build(this)
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
 ```
