@@ -1,4 +1,4 @@
- [ ![Download](https://api.bintray.com/packages/suchox/Android/com.sucho.placepicker/images/download.svg) ](https://bintray.com/suchox/Android/com.sucho.placepicker/_latestVersion)
+ [![](https://jitpack.io/v/suchoX/PlacePicker.svg)](https://jitpack.io/#suchoX/PlacePicker)
 
 # PlacePicker
 Place Picker for Google Maps has been deprecated in Android and we are told to move to paid APIs. Autocomplete, Nearby and Places photos APIs are chargeable after a number of loads. [Check Pricing here](https://cloud.google.com/maps-platform/pricing/sheet/)
@@ -13,9 +13,20 @@ Thankfully, Static and Dynamic Maps on Mobile and Geocoder is still free. PlaceP
 
 Include the following dependencies in your app's build.gradle :
 
+Add it in your root build.gradle at the end of repositories:
+
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
 ```
 dependencies {
-  implementation 'com.sucho:placepicker:1.1.2'
+  implementation 'com.github.suchoX:PlacePicker:1.1.2'
 
   implementation 'com.google.android.gms:play-services-maps:17.0.0'
   implementation 'com.google.android.material:material:1.1.0'
