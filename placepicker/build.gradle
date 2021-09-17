@@ -2,34 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-ext {
-  bintrayRepo = "Android"
-  bintrayName = "com.sucho.placepicker"
-  libraryName = 'placepicker'
-
-  publishedGroupId = 'com.sucho'
-  artifact = 'placepicker'
-  libraryVersion = '1.1.2'
-
-  libraryDescription = 'Free PlacePicker for Android using Google Maps'
-  siteUrl = 'https://github.com/suchoX/PlacePicker'
-  gitUrl = 'https://github.com/suchoX/PlacePicker.git'
-  developerId = 'sucho1994'
-  developerName = 'Suchandrim Sarkar'
-  developerEmail = 'suchandrim.sarkar@gmail.com'
-  licenseName = 'The 2-Clause BSD License'
-  licenseUrl = 'https://opensource.org/licenses/BSD-2-Clause'
-  allLicenses = ["BSD 2-Clause"]
-}
 
 android {
-  compileSdkVersion 28
+  compileSdkVersion 31
 
   defaultConfig {
     minSdkVersion 14
-    targetSdkVersion 28
+    targetSdkVersion 31
     versionCode 1
     versionName "0.1.6"
 
@@ -60,9 +39,4 @@ dependencies {
   implementation 'com.google.android.material:material:1.1.0-alpha09'
   implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
   implementation 'com.google.android.libraries.places:places:2.2.0'
-}
-
-if (project.rootProject.file('local.properties').exists()) {
-  apply from: '../install.gradle'
-  apply from: '../bintray.gradle'
 }

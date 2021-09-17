@@ -322,7 +322,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     } catch (e: Exception) {
       //Time Out in getting address
-      Log.e(TAG, e.message)
+      e.message?.let { Log.e(TAG, it) }
       shortAddress = ""
       fullAddress = ""
       addresses = null
