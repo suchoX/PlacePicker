@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">PlacePicker</string>
   <string name="title_activity_place_picker">Map</string>
+  <string name="lat_lng_coordinates">%1$s, %2$s</string>
 
   <string name="no_address">Not a valid Address</string>
 </resources>
