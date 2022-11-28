@@ -1,3 +1,5 @@
+@file:Suppress("Reformat")
+
 package com.sucho.placepicker
 
 import android.app.Activity
