@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-  compileSdkVersion 31
+  compileSdkVersion 33
 
   defaultConfig {
     minSdkVersion 14
-    targetSdkVersion 31
+    targetSdkVersion 33
     versionCode 1
     versionName "1.1.2"
 
@@ -33,10 +33,10 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation 'androidx.appcompat:appcompat:1.0.2'
-  implementation 'androidx.core:core-ktx:1.0.2'
-  implementation 'com.google.android.gms:play-services-maps:17.0.0'
-  implementation 'com.google.android.material:material:1.1.0-alpha09'
-  implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
-  implementation 'com.google.android.libraries.places:places:2.2.0'
+  implementation 'androidx.appcompat:appcompat:1.5.1'
+  implementation 'androidx.core:core-ktx:1.9.0'
+  implementation 'com.google.android.gms:play-services-maps:18.1.0'
+  implementation 'com.google.android.material:material:1.7.0'
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+  implementation 'com.google.android.libraries.places:places:2.7.0'
 }

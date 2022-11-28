@@ -132,7 +132,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
             as AutocompleteSupportFragment
 
     placeAutocomplete.setPlaceFields(
-      Arrays.asList(
+      listOf(
         Place.Field.ID,
         Place.Field.NAME,
         Place.Field.LAT_LNG,
@@ -195,7 +195,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     secondaryTextColorRes = intent.getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, -1)
     bottomViewColorRes = intent.getIntExtra(Constants.BOTTOM_VIEW_COLOR_RES_INTENT, -1)
     mapRawResourceStyleRes = intent.getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, -1)
-    mapType = intent.getSerializableExtra(Constants.MAP_TYPE_INTENT) as MapType
+    mapType = intent.getSerializableExtraCompat(Constants.MAP_TYPE_INTENT) ?: mapType
     onlyCoordinates = intent.getBooleanExtra(Constants.ONLY_COORDINATES_INTENT, false)
     googleApiKey = intent.getStringExtra(Constants.GOOGLE_API_KEY)
     searchBarEnable = intent.getBooleanExtra(Constants.SEARCH_BAR_ENABLE, false)
@@ -268,7 +268,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       MapType.HYBRID -> GoogleMap.MAP_TYPE_HYBRID
       MapType.TERRAIN -> GoogleMap.MAP_TYPE_TERRAIN
       MapType.NONE -> GoogleMap.MAP_TYPE_NONE
-      else -> GoogleMap.MAP_TYPE_NORMAL
     }
   }
 
@@ -294,9 +293,13 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     placeProgressBar.visibility = View.INVISIBLE
 
-    placeNameTextView.text = if (shortAddress.isEmpty()) "Dropped Pin" else shortAddress
+    placeNameTextView.text = shortAddress.ifEmpty { "Dropped Pin" }
     placeAddressTextView.text = fullAddress
-    placeCoordinatesTextView.text = Location.convert(latitude, Location.FORMAT_DEGREES) + ", " + Location.convert(longitude, Location.FORMAT_DEGREES)
+    placeCoordinatesTextView.text = getString(
+      R.string.lat_lng_coordinates,
+      Location.convert(latitude, Location.FORMAT_DEGREES),
+      Location.convert(longitude, Location.FORMAT_DEGREES)
+    )
   }
 
   private fun getAddressForLocation() {
