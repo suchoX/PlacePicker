@@ -1,5 +1,3 @@
-@file:Suppress("Reformat")
-
 package com.sucho.placepicker
 
 object Constants {

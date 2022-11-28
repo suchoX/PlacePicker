@@ -1,5 +1,3 @@
-@file:Suppress("Reformat")
-
 package com.sucho.placepicker
 
 import java.io.Serializable
