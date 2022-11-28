@@ -25,7 +25,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.sucho.placepicker.databinding.ActivityPlacePickerBinding
 import java.util.*
 
 class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -39,15 +39,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   private var googleApiKey: String? = null
   private var searchBarEnable: Boolean = false
 
-  private lateinit var markerImage: ImageView
-  private lateinit var markerShadowImage: ImageView
-  private lateinit var placeSelectedFab: FloatingActionButton
-  private lateinit var myLocationFab: FloatingActionButton
-  private lateinit var placeNameTextView: TextView
-  private lateinit var placeAddressTextView: TextView
-  private lateinit var infoLayout: FrameLayout
-  private lateinit var placeCoordinatesTextView: TextView
-  private lateinit var placeProgressBar: ProgressBar
+  private val binding by lazy { ActivityPlacePickerBinding.inflate(layoutInflater) }
 
   private var latitude = Constants.DEFAULT_LATITUDE
   private var longitude = Constants.DEFAULT_LONGITUDE
@@ -74,7 +66,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_place_picker)
+    setContentView(binding.root)
     getIntentData()
 
     if (searchBarEnable) {
@@ -85,10 +77,9 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     val mapFragment = supportFragmentManager
         .findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(this)
-    bindViews()
-    placeCoordinatesTextView.visibility = if (showLatLong) View.VISIBLE else View.GONE
+    binding.textViewPlaceCoordinates.visibility = if (showLatLong) View.VISIBLE else View.GONE
 
-    placeSelectedFab.setOnClickListener {
+    binding.placeChosenButton.setOnClickListener {
       if (onlyCoordinates) {
         sendOnlyCoordinates()
       } else {
@@ -109,7 +100,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
       }
     }
 
-    myLocationFab.setOnClickListener {
+    binding.myLocationButton.setOnClickListener {
       if(this::map.isInitialized) {
         map.animateCamera(
           CameraUpdateFactory.newLatLngZoom(
@@ -159,18 +150,6 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
     })
   }
 
-  private fun bindViews() {
-    markerImage = findViewById(R.id.marker_image_view)
-    markerShadowImage = findViewById(R.id.marker_shadow_image_view)
-    placeSelectedFab = findViewById(R.id.place_chosen_button)
-    myLocationFab = findViewById(R.id.my_location_button)
-    placeNameTextView = findViewById(R.id.text_view_place_name)
-    placeAddressTextView = findViewById(R.id.text_view_place_address)
-    placeCoordinatesTextView = findViewById(R.id.text_view_place_coordinates)
-    infoLayout = findViewById(R.id.info_layout)
-    placeProgressBar = findViewById(R.id.progress_bar_place)
-  }
-
   private fun sendOnlyCoordinates() {
     val addressData = AddressData(latitude, longitude, null)
     val returnIntent = Intent()
@@ -204,35 +183,35 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   }
 
   private fun setIntentCustomization() {
-    markerShadowImage.visibility = if (hideMarkerShadow) View.GONE else View.VISIBLE
+    binding.markerShadowImageView.visibility = if (hideMarkerShadow) View.GONE else View.VISIBLE
     if (markerColorRes != -1) {
-      markerImage.setColorFilter(ContextCompat.getColor(this, markerColorRes))
+      binding.markerImageView.setColorFilter(ContextCompat.getColor(this, markerColorRes))
     }
     if (markerDrawableRes != -1) {
-      markerImage.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
+      binding.markerImageView.setImageDrawable(ContextCompat.getDrawable(this, markerDrawableRes))
     }
     if (fabColorRes != -1) {
-      placeSelectedFab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
-      myLocationFab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
+      binding.placeChosenButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
+      binding.myLocationButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fabColorRes))
     }
     if (primaryTextColorRes != -1) {
-      placeNameTextView.setTextColor(ContextCompat.getColor(this, primaryTextColorRes))
+      binding.textViewPlaceName.setTextColor(ContextCompat.getColor(this, primaryTextColorRes))
     }
     if (secondaryTextColorRes != -1) {
-      placeAddressTextView.setTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
+      binding.textViewPlaceAddress.setTextColor(ContextCompat.getColor(this, secondaryTextColorRes))
     }
     if (bottomViewColorRes !=-1) {
-        infoLayout.setBackgroundColor(ContextCompat.getColor(this, bottomViewColorRes))
+        binding.infoLayout.setBackgroundColor(ContextCompat.getColor(this, bottomViewColorRes))
     }
-    myLocationFab.visibility = if(hideLocationButton) View.INVISIBLE else View.VISIBLE
+    binding.myLocationButton.visibility = if(hideLocationButton) View.INVISIBLE else View.VISIBLE
   }
 
   override fun onMapReady(googleMap: GoogleMap) {
     map = googleMap
 
     map.setOnCameraMoveStartedListener {
-      if (markerImage.translationY == 0f && !disableMarkerAnimation) {
-        markerImage.animate()
+      if (binding.markerImageView.translationY == 0f && !disableMarkerAnimation) {
+        binding.markerImageView.animate()
             .translationY(-75f)
             .setInterpolator(OvershootInterpolator())
             .setDuration(250)
@@ -242,7 +221,7 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
 
     map.setOnCameraIdleListener {
       if(!disableMarkerAnimation) {
-        markerImage.animate()
+        binding.markerImageView.animate()
           .translationY(0f)
           .setInterpolator(OvershootInterpolator())
           .setDuration(250)
@@ -273,10 +252,10 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   }
 
   private fun showLoadingBottomDetails() {
-    placeNameTextView.text = ""
-    placeAddressTextView.text = ""
-    placeCoordinatesTextView.text = ""
-    placeProgressBar.visibility = View.VISIBLE
+    binding.textViewPlaceName.text = ""
+    binding.textViewPlaceAddress.text = ""
+    binding.textViewPlaceCoordinates.text = ""
+    binding.progressBarPlace.visibility = View.VISIBLE
   }
 
   private fun setPlaceDetails(
@@ -287,16 +266,16 @@ class PlacePickerActivity : AppCompatActivity(), OnMapReadyCallback {
   ) {
 
     if (latitude == -1.0 || longitude == -1.0) {
-      placeNameTextView.text = ""
-      placeAddressTextView.text = ""
-      placeProgressBar.visibility = View.VISIBLE
+      binding.textViewPlaceName.text = ""
+      binding.textViewPlaceAddress.text = ""
+      binding.progressBarPlace.visibility = View.VISIBLE
       return
     }
-    placeProgressBar.visibility = View.INVISIBLE
+    binding.progressBarPlace.visibility = View.INVISIBLE
 
-    placeNameTextView.text = if (shortAddress.isEmpty()) "Dropped Pin" else shortAddress
-    placeAddressTextView.text = fullAddress
-    placeCoordinatesTextView.text = Location.convert(latitude, Location.FORMAT_DEGREES) + ", " + Location.convert(longitude, Location.FORMAT_DEGREES)
+    binding.textViewPlaceName.text = if (shortAddress.isEmpty()) "Dropped Pin" else shortAddress
+    binding.textViewPlaceAddress.text = fullAddress
+    binding.textViewPlaceCoordinates.text = Location.convert(latitude, Location.FORMAT_DEGREES) + ", " + Location.convert(longitude, Location.FORMAT_DEGREES)
   }
 
   private fun getAddressForLocation() {
